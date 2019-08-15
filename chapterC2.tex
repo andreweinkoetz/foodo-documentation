@@ -1,0 +1,35 @@
+\chapter{Architecture}
+\section{Big Picture}
+\subsection{Foodo Software System}
+The Foodo software system is a distributed web based application that follows state-of-the-art architecture techniques. In the following, the architecture of the Foodo application will be described in a top-down manner.
+ 
+
+The software systems consists of six different components that have been organised in four different code repositories. Those six components are:
+\begin{enumerate}
+	\item Browser based frontend application (frontend)
+	\item HTTP server with REST API (backend)
+	\item Functional substitution algorithm application (algorithm)
+	\item Lambda function for Alexa intents (lambda function)
+	\item Alexa Skill on the Alexa device (Alexa skill)
+	\item MongoDB Document Storage (database)
+\end{enumerate}
+
+Foodo follows the state-of-the-art design decision to separate the corresponding code into separate repositories. The lambda function and the Alexa skill however share one repository as recommended by the Amazon Development Documentation. The algorithm is furthermore integrated into the backend as a git submodule to support interoperability and loosely coupling. As a conclusion, the Foodo application can be described as a microservice-oriented application that follows the client-server model. The backend and the lambda function can be described as servers for the Alexa skill and frontend which act as clients. In addition, the backend also serves as a server for the lambda function in order to query the database. In conclusion, the backend abstracts the database layer away from all other components to support separation of concerns and to reduce code redundancy. 
+
+\subsection{Infrastructure}
+As for the infrastructure, the Foodo software system is hosted on the AWS cloud and can therefore be described as a cloud-native application. This design-decision allows us to scale, load-balance, and secure the application after the state-of-the-art standards set by the big cloud-providers by also profiting from low to none costs through to the pay-as-you-go pricing model. Following AWS services are utilized for the different software components:
+
+\begin{enumerate}
+	\item Frontend is hosted as a static webpage on a S3 bucket
+	\item Frontend is distributed with HTTPS support via Cloudfront
+	\item Backend is hosted on a Elastic Beanstalk Container
+	\item Lambda function is hosted on AWS lambda
+	\item Database is hosted on mLab.com (subsidiary of MongoDB Inc.)
+	\item Alexa Skill is distributed via the Amazon Alexa Appstore 
+	\item Alexa Skill is hosted on the Amazon Alexa Developer Console
+\end{enumerate}
+
+\smallheadline{Code Flow}
+
+
+\autocite{hardt_oauth_2012}
