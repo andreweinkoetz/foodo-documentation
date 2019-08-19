@@ -48,6 +48,27 @@
 
 \usepackage[backend=biber,style=authoryear]{biblatex}
 \addbibresource{Quellen/Quellen.bib}
+\usepackage{dirtree}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\colorlet{punct}{red!60!black}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+	basicstyle=\normalfont\ttfamily,
+	showstringspaces=false,
+	backgroundcolor=\color{white},
+	literate=
+	{:}{{{\color{punct}{:}}}}{1}
+	{,}{{{\color{punct}{,}}}}{1}
+	{\{}{{{\color{delim}{\{}}}}{1}
+	{\}}{{{\color{delim}{\}}}}}{1}
+	{[}{{{\color{delim}{[}}}}{1}
+	{]}{{{\color{delim}{]}}}}{1},
+}
 
 % Spezielle Befehlsdefinitionen:
 \newcommand{\Thema}{}
