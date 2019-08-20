@@ -212,41 +212,42 @@ The different endpoints can be accessed by the lambda function and the frontend.
 The backend implements some utilities besides the express application. The \texttt{script} folder in the root folder contains utility scripts. The \texttt{data-import.js} script was used to import and convert the initial dataset that we received for the Foodo project into our data schema. The \texttt{internationalization.js} script was used to translate the ingredients names of the initial ingredient data to english to support internationalization. We utilized the Google Cloud API for that matter. The file \texttt{src/logger.js} implements a sophisticated logger based on the third-party package \texttt{winston} which allowed us to define log levels both for localhost and for the production system to ease debugging and error handling. 
 
 \section{Algorithm}
-The endpoint \texttt{/recipes/substitutes/} is used during the substitution process and calls the substitution algorithm (git submodule).
-
-The substitution algorithm searches for substitutes to improve the given recipe according to the user's preferences. 
-
-allows personalization 
-goal wight reducation -> reduced energy density -> cite
-
-based on nutriscore -> cite -> determine how healthy an ingrdient is
-based on categories ->             categories are the following: 'Dairy Product',  'Oils, fats and shortenings', 'Meat and poultry',    'Fish and seafood', 'Vegetables', 'Fruits', 'Breads, cereals and grains', 'Soups (canned and diluted)', 'Desserts and sweets', 'Nuts and seeds', 'Beverages', 'Spices'
-
-In a first step the algorithm iterates through the recipe's ingredients and identifies bad ingredients. An ingredient is bad if it is conflict with at least one of the following requirements:
+The endpoint \texttt{/recipes/substitutes/} is used during the substitution process and calls the substitution algorithm (git submodule). The substitution algorithm searches for substitutes to improve the given recipe according to the user's preferences. The user's preferences consist of:
 \begin{itemize}
-	\item nutriscore -> calculate nutriscore for each ingredient, C or worse
-	\item allergies 
-	\item lifestyle
-	\item dislikes
-	\item goal -> reduce weeight -> low energy density
-\end{itemize}
-                 
-After having identified the bad ingredients the algorithm tries to find suitable substitutes within the same ingredient category. 
+	\itemsep-0.5em 
+	\item a nutrition goal ("Eating healthy" or "Reducing healthily weight"),
+	\item a lifestyle ("Low carb", "Vegetarian", "Vegan" or "None"),
+	\item dislikes (list of disliked ingredients or "None"), and
+	\item allergies ("Gluten", "Lactose", "Fructose" or "None").
+\end{itemize} 
+For determining how healthy an ingredient is, the algorithm relies on the NutriScore (\textbf{ADD CITATION}). This score reaches from 'A' (healthy) to 'E' (unhealthy) and was developed by nutrition scientists for rating the healthiness of dishes. It is mandatory to print it on products sold in France. If the user's goal is "Reducing healthily weight", the algorithm calculates the energy density of ingredients, as a low energy density of the nutrition is found to be linked to weight reduction (\textbf{ADD CITATION}). Moreover, the algorithm relies on a food taxonomy to find potential substitutes. Our food taxonomy consists of twelve categories, namely: 'Dairy Product',  'Oils, fats and shortenings', 'Meat and poultry',    'Fish and seafood', 'Vegetables', 'Fruits', 'Breads, cereals and grains', 'Soups (canned and diluted)', 'Desserts and sweets', 'Nuts and seeds', 'Beverages' and 'Spices'. The algorithm always searches for substitutes within the same food category of the ingredient to be substituted.
 
-An ingredient is suitable if it fulfills the following requirements:
+\smallheadline{Steps of the algorithm}
+
+The algorithm consists of two major steps. In the first step the algorithm iterates through the recipe's ingredients and identifies bad ingredients. An ingredient is bad if it fulfills at least one of the following requirements:
 \begin{itemize}
-\item  nutriscore: better number or if it was already A or B then A or B is sufficient
-\item goal
-\item allergies
-\item lifestyle
-\item dislikes -> only if it finds substitutes which fulfill all of the preceding and are not dislikes
+	\itemsep-0.5em 
+	\item the ingredient's NutriScore is C or worse,
+	\item it has a high energy density and the user's nutrition goal is "Reducing healthily weight",
+	\item it is not suitable for the user's lifestyle,
+	\item it is contained in the user's set of dislikes, or
+	\item it triggers one of the user's allergies.
 \end{itemize}
-        
 
-        search for better alternatives within the same food category for every bad ingredient:
-       
+\bigskip \bigskip
+              
+After having identified the bad ingredients the algorithm tries to find suitable substitutes within the same ingredient category. A potential substitute is suitable if it fulfills the following requirements:
+\begin{itemize}
+	\itemsep-0.5em 
+	\item  the substitute's NutriScore is lower than the bad ingredient's one or if the bad ingredient's one is already A or B then A or B is sufficient for the substitute's NutriScore,
+	\item the substitute is not in conflict with the user's nutrition goal
+	\item it is suitable for the user's lifestyle
+	\item it does not trigger the user's allergies, and
+	\item it is not contained in the user's set of dislikes, except for the case that there are not any other potential substitutes available which fulfill all of the preceding requirements and are not dislikes of the user.
+\end{itemize}
+When the algorithm has identified a list of suitable substitutes for each of the bad ingredients, it sorts these lists ascendingly based on the NutriScore, so that the healthiest substitute is in the first place. The results, containing the ranked substitutes per bad ingredient, are returned to the calling endpoint.
 
-        propose these alternatives ranked by the nutriscore as substitutes 
+Additionally, the algorithm offers a function for the Alexa Skill which identifies the worst ingredient of a recipe based on the NutriScore and returns the three best substitutes for it in an ordered list. 
 
 \section{Database}
 The MongoDB document store is abstracted by the backend and organised by the mongoose package. Following schemas have been designed through the backend and organize the Foodo data layer: 
