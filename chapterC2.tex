@@ -212,7 +212,41 @@ The different endpoints can be accessed by the lambda function and the frontend.
 The backend implements some utilities besides the express application. The \texttt{script} folder in the root folder contains utility scripts. The \texttt{data-import.js} script was used to import and convert the initial dataset that we received for the Foodo project into our data schema. The \texttt{internationalization.js} script was used to translate the ingredients names of the initial ingredient data to english to support internationalization. We utilized the Google Cloud API for that matter. The file \texttt{src/logger.js} implements a sophisticated logger based on the third-party package \texttt{winston} which allowed us to define log levels both for localhost and for the production system to ease debugging and error handling. 
 
 \section{Algorithm}
-The endpoint \texttt{/recipes/substitutes/} is used during the substitution process and calls the substitution algorithm (git submodule). 
+The endpoint \texttt{/recipes/substitutes/} is used during the substitution process and calls the substitution algorithm (git submodule).
+
+The substitution algorithm searches for substitutes to improve the given recipe according to the user's preferences. 
+
+allows personalization 
+goal wight reducation -> reduced energy density -> cite
+
+based on nutriscore -> cite -> determine how healthy an ingrdient is
+based on categories ->             categories are the following: 'Dairy Product',  'Oils, fats and shortenings', 'Meat and poultry',    'Fish and seafood', 'Vegetables', 'Fruits', 'Breads, cereals and grains', 'Soups (canned and diluted)', 'Desserts and sweets', 'Nuts and seeds', 'Beverages', 'Spices'
+
+In a first step the algorithm iterates through the recipe's ingredients and identifies bad ingredients. An ingredient is bad if it is conflict with at least one of the following requirements:
+\begin{itemize}
+	\item nutriscore -> calculate nutriscore for each ingredient, C or worse
+	\item allergies 
+	\item lifestyle
+	\item dislikes
+	\item goal -> reduce weeight -> low energy density
+\end{itemize}
+                 
+After having identified the bad ingredients the algorithm tries to find suitable substitutes within the same ingredient category. 
+
+An ingredient is suitable if it fulfills the following requirements:
+\begin{itemize}
+\item  nutriscore: better number or if it was already A or B then A or B is sufficient
+\item goal
+\item allergies
+\item lifestyle
+\item dislikes -> only if it finds substitutes which fulfill all of the preceding and are not dislikes
+\end{itemize}
+        
+
+        search for better alternatives within the same food category for every bad ingredient:
+       
+
+        propose these alternatives ranked by the nutriscore as substitutes 
 
 \section{Database}
 The MongoDB document store is abstracted by the backend and organised by the mongoose package. Following schemas have been designed through the backend and organize the Foodo data layer: 
