@@ -1,23 +1,23 @@
 \chapter{Architecture}
-\section{Big Picture}
-\subsection{Foodo Software System}
+\section{Foodo Software System}
+\subsection{Overview}
 The Foodo software system is a distributed web based application that follows state-of-the-art architecture techniques. In the following, the architecture of the Foodo application will be described in a top-down manner.
  
 The software systems consists of six different components that have been organised in four different code repositories. Those six components are:
 \begin{enumerate}
 	\itemsep-0.5em 
-	\item Browser based frontend application (frontend)
+	\item React web application (frontend)
 	\item HTTP server with REST API (backend)
-	\item Functional substitution algorithm application (algorithm)
+	\item Functional substitution algorithm (algorithm)
 	\item Lambda function for Alexa intents (lambda function)
-	\item Alexa Skill on the Alexa device (Alexa skill)
-	\item MongoDB Document Storage (database)
+	\item Alexa skill on the Alexa device (Alexa skill)
+	\item MongoDB document store (database)
 \end{enumerate}
 
-Foodo follows the state-of-the-art design decision to separate the corresponding code into separate repositories. The lambda function and the Alexa skill however share one repository as recommended by the Amazon Development Documentation. The algorithm is furthermore integrated into the backend as a git submodule to support interoperability and loosely coupling. As a conclusion, the Foodo application can be described as a microservice-oriented application that follows the client-server model. The backend and the lambda function can be described as servers for the Alexa skill and frontend which act as clients. In addition, the backend also serves as a server for the lambda function in order to query the database. In conclusion, the backend abstracts the database layer away from all other components to support separation of concerns and to reduce code redundancy. 
+Foodo follows the state-of-the-art design decision to separate the corresponding code into separate repositories. The lambda function and the Alexa skill however share one repository as recommended by the Amazon Development Documentation. The algorithm is furthermore integrated into the backend as a git submodule to support interoperability and loosely coupling. The Foodo application can be described as a microservice-oriented application that follows the client-server model. The REST backend and the lambda function can be considered as servers for the Alexa skill and frontend which act as clients. In addition, the backend also serves the lambda function in order to query the database. In conclusion, the backend abstracts the database layer from all other components to support separation of concerns and to reduce code redundancy. 
 
 \subsection{Infrastructure}
-As for the infrastructure, the Foodo software system is hosted on the \gls{aws} cloud and can therefore be described as a cloud-native application. This design-decision allows us to scale, load-balance, and secure the application after state-of-the-art standards set by big cloud providers while also profiting from low to none costs through to the pay-as-you-go pricing model. Following AWS services are utilized for the different software components:
+As for the infrastructure, the Foodo software system is hosted on the \gls{aws} cloud and can therefore be described as a cloud-native application. This design decision allows us to scale, load-balance, and secure the application based on state-of-the-art standards set by big cloud providers. Furthermore, by using AWS, we also profit from low to zero costs through the pay-as-you-go pricing model. Following AWS services are utilized for the different software components:
 
 \begin{enumerate}
 	\itemsep-0.5em 
@@ -26,23 +26,23 @@ As for the infrastructure, the Foodo software system is hosted on the \gls{aws} 
 	\item Backend is hosted on a Elastic Beanstalk Container
 	\item Lambda function is hosted on AWS lambda
 	\item Database is hosted on mLab.com (subsidiary of MongoDB Inc.)
-	\item Alexa Skill is distributed via the Amazon Alexa Appstore 
-	\item Alexa Skill is hosted on the Amazon Alexa Developer Console
+	\item Alexa skill is distributed via the Amazon Alexa Appstore 
+	\item Alexa skill is hosted on the Amazon Alexa Developer Console
 \end{enumerate}
 
 \smallheadline{Code Flow}
 
-We incorporated HTTPS for our front- and backend to follow state-of-the-art security guidelines that are also mandatory (enforced by Amazon) for the account linking of Alexa Skills. On top of HTTPS, the Foodo application uses \gls{rest} as a communication paradigm based on \gls{json}.
+We incorporated HTTPS for our front- and backend to follow state-of-the-art security guidelines that are also mandatory (enforced by Amazon) for the account linking of Alexa skills. On top of HTTPS, the Foodo application uses \gls{rest} as a communication paradigm based on \gls{json}.
 
-Authorization and authentication are essential parts of a distributed and secure microservice architecture and require a state-of-the-art protocol implementation. The Foodo software system implements the \gls{oauth2} framework (as defined in RFC 6749) to offer its users a sophisticated authorization and authentication flow, as described below. 
+Authorization and authentication are essential parts of a distributed and secure microservice architecture and require a state-of-the-art protocol implementation. The Foodo software system implements the \gls{oauth2} framework (as defined in RFC 6749) to offer its users a sophisticated authorization and authentication flow, as described below.  
 
 \smallheadline{Authentication Flow}
 
-The oAuth2 framework is based on issuing tokens to give a user permission to access restricted parts of the application. We incorporated three different grant types to provide an easy way for the user to login as well as to fulfill all requirements of the Alexa account linking. 
+The oAuth2 framework is based on issuing tokens to give a user permission to access restricted parts of the application. Foodo incorporates three different grant types to provide an easy way for the user to login and fulfill all requirements of the Alexa account linking. 
 
-The first grant type \textit{Resource Owner Password Credentials} is used during the login and sign-up process in the React Web App. At first, the user enters his username and password into a webform and submits them to the backend server. Once the backend successfully validated the credentials, it responds with a newly generated access token, which is then securely stored by the React Webapp. 
+The first grant type \textit{Resource Owner Password Credentials} handles the login and sign-up process in the React web app. At first, the user enters his username and password into a webform and submits them to the backend server. Once the backend successfully validated the credentials, it responds with a newly generated access token, which is then securely stored by the React web app.
 
-The second grant type \textit{Authorization Code} is required to link the user profile within Foodo to the Amazon account of an Alexa user. In order for Alexa to call the backend on behalf of the user, he needs to authorize Alexa. Therefore the user gets redirected to the React Web App displaying a login form, when installing the Alexa skill on his Amazon Echo. As with the first grant type, the user needs to enter his credentials and submit them. But instead of an access token, the backend responds with an authorization code. Once the React Web App has received this code, it redirects it to a predefined Amazon URL. Thereafter, an Amazon service sends an access token request to the backend containing the authorization code. As soon as the backend confirms the validity of the authorization code, it sends an access token in response, which will be stored by Amazon Alexa for further use. 
+The second grant type \textit{Authorization Code} is required to link the Foodo user profile to the Amazon account of the Alexa user. This procedure has to be done only once before the initial start of the Alexa skill. After the user has installed the Foodo skill through the Alexa App (Amazon skill store), the user gets prompted to link the Foodo profile to the Alexa account. On click on the linking button, the user gets redirected to the Foodo web app displaying an authorization form. The React app passes the request to the Foodo backend which validates the access token and responds with an authorization code. Once the React web app has received this code, the user gets redirected to a predefined Amazon URL. Thereafter, an Amazon service sends an access token request to the backend containing the authorization code. As soon as the backend confirms the validity of the authorization code, it sends an access token in response, which will be stored by Amazon Alexa for further use. 
 
 The last grant type \textit{Refresh Token} provides a convenient way to renew an expired access token. All issued access tokens contain the following information:
 \vspace{-1em}
@@ -55,7 +55,7 @@ The last grant type \textit{Refresh Token} provides a convenient way to renew an
 \end{itemize}
 
 
-When a request attempts to access a protected resource with an expired access token, the backend denies this access. The React Web App includes an automatic code flow to identify a failed attempt and to request a newly generated access token using the appropriate refresh token. The backend checks if the refresh token is still valid and issues a new access token.
+When a request attempts to access a protected resource with an expired access token, the backend denies this access. The React web app includes an automatic code flow to identify a failed attempt through the specified error code and requests a new access token using the locally stored refresh token. The backend validates the refresh token and issues a new access token.
 
 \smallheadline{Authorization Flow}
 
@@ -66,11 +66,11 @@ Each request for a protected resource requires authorization. The oAuth2 server 
 
 \smallheadline{Internationalization}
 
-We used the third-party library \texttt{i18n} to utilize internationalization based on locales. The Fodoo application currently supports English and German but could very easily be expanded to any language. \texttt{i18n} is used in the lambda function and frontend simoutanely. 
+We used the third-party library \texttt{i18n} to utilize internationalization based on locales. The Foodo application currently supports English and German but could very easily be expanded to any language. \texttt{i18n} is used in the lambda function and frontend simoutanely. 
 
 \smallheadline{Environment Handling}
 
-All repositories utilize \texttt{.env} files to manage environment variables to enable test, development and production environments. We utilize these logics to enable logging, switch home paths and other environment based information. Furthermore, the \texttt{.env} files allow us to encapsulate sensible information like passwords or private keys from the code repositories.
+All repositories utilize \texttt{.env} files to manage environment variables to enable test, development and production environments. We utilize these logics to enable logging, switching home paths and other environment based information. Furthermore, the \texttt{.env} files allow us to encapsulate sensible information like passwords or private keys from the code repositories.
 
 \section{Frontend Architecture}
 
@@ -86,15 +86,24 @@ The frontend of the Foodo software system is implemented as a web app that runs 
 	\item Eslint
 \end{itemize}
 
-We used the package manager \gls{npm} to organize third party libraries and frameworks. We built our application on top of \texttt{create-react-app}, an official React skeleton application that comes with pre configured \texttt{Webpack}, \texttt{Babel}, \texttt{Eslint} and \texttt{SCSS} support. To further configure the coding environment, we ejected out of \texttt{create-react-app}.
+We used the package manager \gls{npm} to organize third party libraries and frameworks. We built our application on top of \texttt{create-react-app}, an official React skeleton application that comes with pre-configured \texttt{Webpack}, \texttt{Babel}, \texttt{Eslint} and \texttt{SCSS} support. To further configure the coding environment, we ejected out of \texttt{create-react-app}.
 
-\smallheadline{React Web App}
+\smallheadline{React web app}
 
-React is not opinionated about folder structure and code structure but we followed a well adapted pattern of component-container abstraction where components are pure components without state and container are stateful components. In addition, the frontend utilizes most of the newest React version features like context (global state management), custom hooks (functional separation-of-concern pattern to share state or functionality between components) and the use of functional components instead of classes using the new hook api. This enabled us to build highly performant frontend code that shares API data across the application and manages user state efficiently while also providing a straightforward scalable and reusable component infrastructure. 
+React is not opinionated about folder structure and code structure but we followed a well adapted pattern of component-container abstraction. React uses components to isolate the frontend code into separate entities. With the component-container abstraction, following naming convention is used: Components are pure components without state and containers are stateful components that handle the application state. In addition, the frontend utilizes many of the latest React features like context (global state management), custom hooks (functional separation-of-concern pattern to share state or functionality between components) and the use of functional components instead of classes using the new hook API. This enabled us to build highly performant frontend code that shares API data across the application and manages user state efficiently while also providing a straightforward scalable and reusable component infrastructure. 
 
 \smallheadline{Design Choices}
 
-We followed the design principles of Google’s \textit{Material Design} and based our design choices on the design language of \textit{Ant Design}. This allowed us to have a consistent design and UI across all pages. We rely heavily on the scss features as extending css-classes and reusing css-values via scss-variables which allowed us to predefine design choices like font, coloring, padding, margin, box shadows and border boxes, and content alignment once for the whole application. This also enabled us to switch between design prototypes very quickly. The \texttt{\_variables.scss }file was used to store the global variables of the scss designs. 
+The Foodo frontend UI follows the design principles of Google’s \textit{Material Design}\footnote{Material Design - https://material.io} and is based on the design language of \textit{Ant Design}\footnote{Ant Design - https://ant.design}. This enables Foodo to have a consistent design and UI across all pages. It relies heavily on the SCSS features of extending css-classes and reusing css-values which allows to predefine design choices like font, coloring, padding, margin, box shadows and border boxes, and content alignment once for the whole application. This also enables to switch between design prototypes very quickly. The \texttt{\_variables.scss} file was used to store the global variables of the SCSS designs. 
+
+\begin{figure}[ht]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/code/scss.png}
+		\vspace{-3em}
+		\caption{Global styling in \texttt{\_variables.scss}}
+	\end{center}
+\end{figure}
 
 \smallheadline{Folder structure}
 
@@ -118,15 +127,47 @@ The frontend code is furthermore structured as follows:
 .4 includes .
 }
 
-As mentioned above, we divided the React components into stateful components (\texttt{container}) and pure functional components (\texttt{components}). An example for a pure component would be the \texttt{button} component that offers an abstraction layer for a predefined button with corresponding styling to reuse across the application. The \texttt{App.js} container on the other hand, handles the application routing (based on \texttt{react-router-dom}), renders the \texttt{navbar} and the content of the application, while also rendering all context providers with the global state on mounting of the application. The app container won’t be used more than once within the application tree but it is used as a container for content and smaller containers to wrap functionality for the user. The \texttt{hooks} folder is used to abstract functionality with the new hook api. Those functions offer sharable functionality for the different components. For instance, we created \texttt{useDeviceState.js} as a hook to validate if the current device \texttt{isMobile}, a boolean based on \texttt{eventListeners} of the browser api that refreshes all dependent components if \texttt{isMobile} changes. The \texttt{provider} folder comprises the context and providers to store global state. The \texttt{userStateProvider} stores the user object and shares the username and the boolean \texttt{isLoggedIn} with the full application scope. Most of the context provider get initialised as children of the application container component to be rendered only once on application startup. This allows us to get the application state (e.g. all recipes, ingredients, user recipes) on initial rendering of the application. By that the loading time for the user is reduced significantly and it also allows us to retrieve the data only once during the user session which saves network data.
+As mentioned above, the React components are divided into stateful components (\texttt{container}) and pure functional components (\texttt{components}). An example for a pure component would be the \texttt{button} component that offers an abstraction layer for a predefined button with corresponding styling to reuse across the application. As you can derive from the code example (see figure \ref{fig:button}), the Foodo frontend utilizes latest JavaScript syntactic sugar notations like arrow functions and \gls{jsx}.
 
-The \texttt{service} folder is used to abstract the HTTP functionality which is not part of the react library. We used the third-party library axios to implement the \gls{ajax} requests. The basic HTTP functionality (\texttt{GET}, \texttt{POST}, \texttt{PUT}, \texttt{DELETE}, header creation) is implemented in \texttt{foodo-api/httpService.js}. Building on top of it, \texttt{oAuthService.js} handles the oAuth2 authorization and authentication of the user. The actual REST endpoints get called by specific functions in the different subfolders e.g. \texttt{user/userService.js} offers the functions to login and register a user while \texttt{user/profileService.js} offers AJAX calls to post and put profile information of a user.
+\begin{figure}[!ht]
+	\captionsetup{justification=centering}
+	\centering
+		\includegraphics[scale=0.28]{Ressourcen/img/code/button.png}
+		\vspace{-3em}
+		\caption{Pure basic button component (\texttt{button.js})}
+		\label{fig:button}
+\end{figure}
 
-The \texttt{utilities} folder offers a variety of utility classes and helper functions that do not fit in any of the other folders. The internationalizion folder for example holds the \texttt{i18n} implementation to support global string management as a lightweight language module. The \texttt{localStorage} of the browser api is also abstracted as helper functions in the utility folder and used to store the user token, redirect urls, user locale and other information into the persistent session and local storage. 
+The \texttt{App.js} container on the other hand, handles the application routing (based on \texttt{react-router-dom}), renders the \texttt{navbar} and the content of the application, while also rendering all context providers with the global state on mounting of the application. The app container won’t be used more than once within the application tree but it is used as a container for content and smaller containers to wrap functionality for the user. 
+
+The \texttt{hooks} folder is used to abstract functionality with the new hook API. Those functions offer sharable functionality for the different components. For instance, we created \texttt{useDeviceState.js} as a hook to validate if the current device \texttt{isMobile}, a boolean based on \texttt{eventListeners} of the browser API that refreshes all dependent components if \texttt{isMobile} changes. Furthermore, hooks (in contrast to global state) reduce the risk of side-effects as different components inject the hook's state without sharing it application-wide. 
+
+\begin{figure}[!ht]
+	\captionsetup{justification=centering}
+	\centering
+	\includegraphics[scale=0.28]{Ressourcen/img/code/hook.png}
+	\vspace{-4em}
+	\caption{Device state in custom hook (\texttt{useDeviceState.js})}
+	\label{fig:button}
+\end{figure}
+
+The \texttt{provider} folder comprises the context and context-providers. The context API is used to share global (API-)data across different components. For instance, the \texttt{RecipesProvider} holds and shares the standard recipes with the full application scope. As most of the context providers get initialised as children of the application container component, they have to be rendered only once on application startup. This enables Foodo to get the application state from the backend (e.g. all recipes, ingredients, user recipes) on initial rendering of the application. By that, the visible loading time for the user is reduced significantly. Moreover, as the application container only renders once, the context-provder will stay within the React \gls{dom} until the user closes the browser tab. This allows the Foodo frontend to retrieve the data only once during the user session which saves network data and further reduces lag times.
+
+\begin{figure}[!ht]
+	\captionsetup{justification=centering}
+	\centering
+	\includegraphics[scale=0.28]{Ressourcen/img/code/context.png}
+	\vspace{-4em}
+	\caption{Global state shared by context-provider (\texttt{RecipeProvider.js})}
+\end{figure}
+
+The \texttt{service} folder is used to abstract the HTTP functionality which is not part of the React library. All services utilize the third-party library \textit{axios} to implement the \gls{ajax} requests. The basic HTTP functionality (\texttt{GET}, \texttt{POST}, \texttt{PUT}, \texttt{DELETE}, header creation) is implemented in \texttt{foodo-api/httpService.js}. Building on top of it, \texttt{oAuthService.js} handles the oAuth2 authorization and authentication of the user. The actual REST endpoints get called by specific functions in the different subfolders e.g. \texttt{user/userService.js} offers the functions to login and register a user while \texttt{user/profileService.js} offers AJAX calls to post and put profile information of a user.
+
+The \texttt{utilities} folder offers a variety of utility classes and helper functions that do not fit in any of the other folders. The internationalizion folder for example holds the \texttt{i18n} implementation to support global string management as a lightweight language module. The \texttt{localStorage} of the browser API is also abstracted as helper functions in the utility folder and used to store the user token, redirect urls, user locale and other information into the persistent session and local storage. 
 
 \section{Lambda function architecture} \label{lambda}
 
-The lambda function provides Alexa intent handlers using Node.js and the \texttt{ask-sdk} (Software Development Kit for Alexa Skill development).The folder structure of the repository incorporates the Alexa Skill definition (\texttt{skill.json} and \texttt{/models}), the lambda function (\texttt{/lambda/custom}) as well as utilities like the deployment pipeline (\texttt{.ask}) provided by the \gls{askcli}. The folder structure of the lambda function was designed as follows and is based on skeleton applications provided by the Alexa GitHub page: \vspace{1em}
+The lambda function provides Alexa intent handlers using Node.js and the \texttt{ask-sdk} (Software Development Kit for Alexa skill development).The folder structure of the repository incorporates the Alexa skill definition (\texttt{skill.json} and \texttt{/models}), the lambda function (\texttt{/lambda/custom}) as well as utilities like the deployment pipeline (\texttt{.ask}) provided by the \gls{askcli}. The folder structure of the lambda function was designed as follows and is based on skeleton applications provided by the Alexa GitHub\footnote{Alexa Github - https://github.com/alexa} repository: \vspace{1em}
 
 \dirtree{%
 .1 lambda/custom .
@@ -139,10 +180,9 @@ The lambda function provides Alexa intent handlers using Node.js and the \texttt
 .2 package.json .
 }
 
-The lambda function starts on usage of the Alexa Skill through an Alexa device or the Alexa Developer Console and runs the \texttt{index.js} script. Within \texttt{index.js} the \texttt{ask-sdk} skill builder utility is called to load the intent handlers from the corresponding folder and build the Alexa Skill. The \texttt{internationalization} folder is used as middleware (interceptor) and builds on the same \texttt{i18n} package used in the frontend. 
+The lambda function starts on usage of the Alexa skill through an Alexa device or the Alexa Developer Console and runs the \texttt{index.js} script. Within \texttt{index.js} the \texttt{ask-sdk} skill builder utility is called to load the intent handlers from the corresponding folder and build the Alexa skill. The \texttt{internationalization} folder is used as a middleware (interceptor) and builds on the same \texttt{i18n} package used in the frontend. 
 
-Each Intent Handler provides two functions. \texttt{canHandle} defines a boolean return value if the Intent Handler can handle the intent from the Alexa skill that is currently activated by the user and \texttt{handle} is used to implement the actual functionality of the lambda function. For instance, the RecipeHandler is responsible for \texttt{RecipeIntents} and when called \texttt{handle} will output a list of recipes that Foodo offers to the user. The \texttt{cookingIntent} can handle the \texttt{CookingIntent} and offers a complex dialogue to navigate the user through the cooking process. The \texttt{CookingIntent} therefore utilizes \texttt{requestEnvelope} variables that can be filled with values by the user and are passed to the lambda function by the Alexa device. The current dialogue step gets identified by the Intent Handler by checking which variables have been filled already. At first the handler checks if the recipe variable has been filled by the user. If not, we output the speech to prompt the user to say what he wants to cook. If the recipe value is filled already, we move on and make an AJAX call to the backend to retrieve the user recipe of the currently authorized user and the recipe name. We further prompt if the user wants to substitute the worst ingredient. If the user replies with \textit{yes}, Alexa will insert the value yes into the requestEnvelope \texttt{yesNoValue} and we can further retrieve possible substitutes for the user recipe and prompt the different substitution options to the user. If the user answers with a valid option (one, two, or three as defined in the dialogue model), we use the named index to identify the selected substitute and call the backend again to alter the user recipe. This step is needed as it is currently not supported in Alexa Intents to dynamically offer requestEnvelope values for a fillable variable that the user can select. As a workaround, the user can picked indexes (hard coded requestEnvelope values one, two, three) that refer to dynamic values of the substitute names that we output to the user through made AJAX calls.
-Finally, we inform the user about the change and terminate the interaction. 
+Each intent handler provides two functions. \texttt{canHandle} defines a boolean return value if the intent handler can process the intent from the Alexa skill that is currently activated by the user and \texttt{handle} is used to implement the actual functionality of the lambda function. For instance, the \texttt{RecipeHandler} is responsible for \texttt{RecipeIntents} and when called, \texttt{handle} will output a list of recipes that Foodo offers to the user. The \texttt{CookingHandler} can handle the \texttt{CookingIntent} and offers a complex dialogue to navigate the user through the cooking process. The \texttt{CookingHandler} therefore utilizes \texttt{requestEnvelope} variables that can be filled with values by the user and are passed to the lambda function by the Alexa device. The current dialogue step gets identified by the intent handler by checking which variables have been filled already. At first the handler checks if the recipe variable has been filled by the user. If not, we output a prompt to the user to ask what he wants to cook. If the recipe value is filled already, we move on and make an AJAX call to the backend to retrieve the user recipe of the currently authorized user by the recipe name. We further prompt if the user wants to substitute the worst ingredient. If the user replies with \textit{yes}, Alexa will insert the value yes into the requestEnvelope \texttt{yesNoValue} and we can further retrieve possible substitutes for the user recipe and prompt the different substitution options to the user. If the user answers with a valid option (one, two, or three as defined in the dialogue model), we use the named index to identify the selected substitute and call the backend again to alter the user recipe. This step is needed as it is currently not supported in Alexa intents to dynamically offer \texttt{requestEnvelope} values for a variable that the user can select. As a workaround, the user can pick indices (hard coded \texttt{requestEnvelope} values 1, 2, 3) that refer to dynamic values of the substitute names that we output to the user through made AJAX calls. Finally, we inform the user about the change and terminate the interaction. 
 
 \begin{figure}[ht]
 	\captionsetup{justification=centering}
@@ -152,7 +192,7 @@ Finally, we inform the user about the change and terminate the interaction.
 \end{center}
 \end{figure}
 
-The different Intent Handlers therefore define the possible user interactions and allow us to split different features into different functions. The possible commands for the user to trigger the different intents are the defined in the model folder where we specified each intent flow in German and English to support internationalization. The HTTP functionality is implemented within the \texttt{services/foodo-api} folder and follows the same design decisions as the frontend services folder. Again, \texttt{axios} is used as a third-party package to implement the requests. 
+The different intent handlers define the possible user interactions and facilitate to split different features into separate functions. The possible commands for the user to trigger the intents are defined in the model folder. Here, each intent is defined in all supported languages (German and English) to allow internationalization. The HTTP functionality is implemented within the \texttt{services/foodo-api} folder and follows the same design decisions as the frontend services. Again, \texttt{axios} is used as a third-party package to implement the requests. 
 
 \section{Backend Architecture}
 
