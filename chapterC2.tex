@@ -14,7 +14,7 @@ The software systems consists of six different components that have been organis
 	\item MongoDB document store (database)
 \end{enumerate}
 
-Foodo follows the state-of-the-art design decision to separate the corresponding code into separate repositories. The lambda function and the Alexa skill however share one repository as recommended by the Amazon Development Documentation. The algorithm is furthermore integrated into the backend as a git submodule to support interoperability and loosely coupling. The Foodo application can be described as a microservice-oriented application that follows the client-server model. The REST backend and the lambda function can be considered as servers for the Alexa skill and frontend which act as clients. In addition, the backend also serves the lambda function in order to query the database. In conclusion, the backend abstracts the database layer from all other components to support separation of concerns and to reduce code redundancy. 
+Foodo follows the state-of-the-art design decision to separate the corresponding code into separate repositories. The lambda function and the Alexa skill however share one repository as recommended by the Amazon Development Documentation. The algorithm is furthermore integrated into the backend as a git submodule to support interoperability and loosely coupling which allows to plug-in different substitution algorithms in the future. The components frontend, backend, lambda function and Alexa skill furthermore communicate through HTTP or related protocols. In conclusion, the Foodo application can be described as a microservice-oriented application that follows the client-server model. The REST backend and the lambda function can be considered as servers for the Alexa skill and frontend which act as clients. In addition, the backend also serves the lambda function in order to query the database. The backend abstracts the database layer from all other components to support separation of concerns and to reduce code redundancy. 
 
 \subsection{Infrastructure}
 As for the infrastructure, the Foodo software system is hosted on the \gls{aws} cloud and can therefore be described as a cloud-native application. This design decision allows us to scale, load-balance, and secure the application based on state-of-the-art standards set by big cloud providers. Furthermore, by using AWS, we also profit from low to zero costs through the pay-as-you-go pricing model. Following AWS services are utilized for the different software components:
@@ -196,11 +196,11 @@ The different intent handlers define the possible user interactions and facilita
 
 \section{Backend Architecture}
 
-The backend of Foodo provides a REST API using the Node.js web application framework Express. Built on Chrome's JavaScript runtime, Node.js facilitates building lightweight and scalable network applications, as it uses an event-driven, non-blocking I/O model. Express creates a thin layer of basic web application features on top of Node.js, which can be extended by middleware modules. The abstraction of complex HTTP methods, extending the API by middleware modules and the lightweight architecture significantly reduce the overhead of building a robust and flexible REST API.
+The backend of Foodo provides a REST API using the Node.js web application framework Express. Built on Chrome's JavaScript runtime, Node.js facilitates building lightweight and scalable network applications, as it uses an event-driven, non-blocking I/O model. Express creates a thin layer of basic web application features on top of Node.js which can be extended by middleware modules. The abstraction of complex HTTP methods, extending the API by middleware modules and the lightweight architecture significantly reduce the overhead of building a robust and flexible REST API.
 
 \smallheadline{Code Structure}
 
-The folder strcuture is designed as follows:
+The folder structure is designed as follows:
 \vspace{1em}
 \dirtree{%
 	.1 foodo-backend .
@@ -214,7 +214,7 @@ The folder strcuture is designed as follows:
 	.3 oauth.js .
 }
 
-We utilize the third-party package mongoose to organize and access the mongoDB database. The \texttt{model} folder is used to define the mongoose models that are used to structure data models based on a simple and straightforward JSON object. The \texttt{recipe.js} model for instance defines a schema with the following attributes:
+We utilize the third-party package mongoose to organize and access the MongoDB database. The \texttt{model} folder is used to define the mongoose models that are used to structure data models based on a simple and straightforward JSON object. The \texttt{recipe.js} model for instance defines a schema with the following attributes:
 
 \begin{lstlisting}[language=json,firstnumber=1,caption={Example of recipe "Lasagne"},captionpos=b]
 {
@@ -239,19 +239,19 @@ We utilize the third-party package mongoose to organize and access the mongoDB d
 }
 \end{lstlisting}
 
-The ingredients array further encapsulates the two attributes amount and ingredient. Ingredient is implemented as a foreign key \texttt{\_id} which points to a ingredient of the ingredient schema. As a conclusion, mongoose allows to design relationships between data objects. We utilized this to implement the food taxonomy. 
+Thereby, the backend enfores a basic structure that every standard recipe has to follow. Every standard recipe holds a \texttt{name}, a \texttt{preparation time}, a \texttt{meal} definition, a \texttt{difficulty}, an image URL and an array of ingredients and some further attributes. The \texttt{ingredients array} further encapsulates the two attributes \texttt{amount} and \texttt{ingredient}. \texttt{ingredient} is implemented as a foreign key \texttt{\_id} which points to a ingredient of the ingredient schema. Those foreign keys can further be populated on REST request. This allows the backend to specify precise response values for the different REST routes.  As a conclusion, mongoose allows to design relationships between data objects and we utilized this to implement the food taxonomy (see section \ref{database}).
 
-The \texttt{controllers} folder is used to implement the REST endpoints that are defined in the routes folder. Routes define the structure of the express REST API that we implement whereas the controllers implement the actual functionality of the different endpoints. We used the state-of-the-art naming convention of a REST api. The backend offers the following REST routes and HTTP functions.
+The \texttt{controllers} folder is used to implement the REST endpoints that are defined in the \texttt{routes} folder. Routes define the structure of the express REST API (how) whereas the controllers implement the actual functionality (what) of the different endpoints. We used the state-of-the-art naming convention of a REST api. The backend offers the following REST routes and HTTP functions.
 
 (Hier fehlt noch das Listing aller Routes - schöne Darstellung)
 
-The different endpoints can be accessed by the lambda function and the frontend. The subscription route further gets called by PayPal webhooks to verify a user subscription. All endpoints operate in the same way, retrieving the request data out of the request object, operating on the MongoDB database through mongoose and sending a response to the client. The express middleware handles the user authentication via the oAuth2 flow and passes the user object to all the restricted API endpoints fencing the actual REST endpoints from the authorization layer. 
+The different endpoints can be accessed by the lambda function and the frontend. The subscription route further gets called by PayPal webhooks and allow the backend to verify user subscriptions. All endpoints operate in the same way, retrieving the request data out of the request object, operating on the MongoDB database through mongoose and sending a response back to the client. The Express middleware handles the user authentication via the oAuth2 flow and passes the user object to all the restricted API endpoints fencing the actual REST endpoints from the authorization layer. 
 
 \smallheadline{Utilities}
 
 The backend implements some utilities besides the express application. The \texttt{script} folder in the root folder contains utility scripts. The \texttt{data-import.js} script was used to import and convert the initial dataset that we received for the Foodo project into our data schema. The \texttt{internationalization.js} script was used to translate the ingredients names of the initial ingredient data to english to support internationalization. We utilized the Google Cloud API for that matter. The file \texttt{src/logger.js} implements a sophisticated logger based on the third-party package \texttt{winston} which allowed us to define log levels both for localhost and for the production system to ease debugging and error handling. 
 
-\section{Algorithm}
+\section{Algorithm} \label{algorithm}
 The endpoint \texttt{/recipes/substitutes/} is used during the substitution process and calls the substitution algorithm (git submodule). The substitution algorithm searches for substitutes to improve the given recipe according to the user's preferences. The user's preferences consist of:
 \begin{itemize}
 	\itemsep-0.5em 
@@ -287,9 +287,9 @@ After having identified the bad ingredients the algorithm tries to find suitable
 \end{itemize}
 When the algorithm has identified a list of suitable substitutes for each of the bad ingredients, it sorts these lists ascendingly based on the NutriScore, so that the healthiest substitute is in the first place. The results, containing the ranked substitutes per bad ingredient, are returned to the calling endpoint.
 
-Additionally, the algorithm offers a function for the Alexa Skill which identifies the worst ingredient of a recipe based on the NutriScore and returns the three best substitutes for it in an ordered list. 
+Additionally, the algorithm offers a function for the Alexa skill which identifies the worst ingredient of a recipe based on the NutriScore and returns the three best substitutes for it in an ordered list. 
 
-\section{Database}
+\section{Database} \label{database}
 The MongoDB document store is abstracted by the backend and organised by the mongoose package. Following schemas have been designed through the backend and organize the Foodo data layer: 
 
 \begin{figure}[ht]
@@ -300,4 +300,37 @@ The MongoDB document store is abstracted by the backend and organised by the mon
 	\end{center}
 \end{figure}
 
-The recipe describes a basic recipe that holds a set of ingredients. Each ingredient has a category (food taxonomy, e.g. meat) and a set of allergies and lifestyles (user personalization, e.g. vegan). The user model is connected to the authorization flow data objects client, token, and code. Tokens are used to handle the authorization of the user, whereas clients define the different clients (frontend, lambda function) that the user can use to authenticate. The code schema is used to offer authorization codes for the user to authorize clients (Alexa) to act as the user. The user also holds subscriptions (premium user vs. free usage). We defined a simple access level hierarchy (admin, subscribed, free) that is implemented via the subscription model. In addition, the user has profile information about his lifestyle, goal, allergies and dislikes (ingredients). The user is also linked to its personalized recipes that hold a reference to the original standard recipe and a new set of current ingredients and a list of blocked substitutes that the user doesn’t wanted to change. The cooking schema is used as a state management for the alexa cooking intent. If the user has indicated within the dialogue flow that he wants to substitute, the possible substitutes for the current recipe and user are stored in the cooking object and later accessed if the user decides which substitute he wants to use in the substitution process (see Section \ref{lambda}).
+\smallheadline{Data model relationships}
+
+The recipe describes a basic recipe that holds a set of ingredients. Each ingredient has a category (see figure \ref{categories}) and a set of allergies (gluten, lactose, fructose) and lifestyles (vegan, vegetarian, none, or low carbohydrates). The user model is connected to the authorization flow data objects client, token, and code. Tokens are used to handle the authorization of the user, whereas clients define the different clients (frontend and lambda function) that the user can use to authenticate. The code schema is used to offer authorization codes for the user to authorize clients (Alexa) to act in behalf of the user. The user also holds subscriptions. We defined a simple access level hierarchy (admin, subscribed, free) that is implemented via the subscription model. In addition, the user holds profile information about his lifestyle, goal (eat healthy, reduce weight), allergies and dislikes (ingredients). The user is also linked to its personalized recipes that contain a reference to the original standard recipe and a new set of current ingredients and a list of blocked substitutes that the user does not wanted to change. The cooking schema is used as a state management for the Alexa cooking intent. If the user has indicated within the dialogue flow that he wants to substitute, the possible substitutes for the current recipe and user are stored in the cooking object and later accessed if the user decides which substitute he wants to use in the substitution process (see section \ref{lambda}).
+
+\begin{figure}[ht]
+	\captionsetup{justification=centering}
+	\begin{center}
+	\begin{itemize} 
+		\itemsep-0.5em 
+		\item Dairy products
+		\item Oils, fats and shortenings	
+		\item Meat and poultry	
+		\item Fish and seafood
+		\item Vegetables	
+		\item Fruits	
+		\item Breads, cereals and grains	
+		\item Soups (canned and diluted)	
+		\item Desserts and sweets	
+		\item Nuts and seeds	
+		\item Beverages
+		\item Spices
+	\end{itemize}
+	\caption{Currently supported categories in the \texttt{category} model}
+	\label{categories}
+	\end{center}
+\end{figure}
+
+\smallheadline{Food taxonomy}
+
+One important task of implementing the Foodo software system was designing a food taxonomy that would allow to implement a sophisticated substitution algorithm. Out of our perspective, personalization was one key aspect that the food taxonomy had to offer to the Foodo user. Therefore, as mentioned above, the user object holds attributes for disliked ingredients, allergies, a lifestyle and a personal goal . Furthermore, through the cooking process (frontend cooking page or Alexa cooking intent), the selected standard recipe is used as a starting point for the current user's personalized recipe (\texttt{personalized recipe} mongoose model). Once the user has a personalized user recipe for a corresponding standard recipe, the user recipe will be used instead. The user recipe holds further attributes for personalization. Every user recipe holds an array to block possible substitutes. If the user denies a substitute, the Foodo system will remember this decision. To offer fitting and related substitutes for each ingredient (see section \ref{algorithm}) each ingredient also holds information about supported lifestyles, allergies, NutriScore information and a category (see figure \ref{categories}). The definition of categories allows the substitution algorithm to filter for fitting ingredients. Finally, all past substitutions are saved in the user's personalized recipe and logged in the \texttt{substitution} mongoose model. This would allow the Foodo software system to learn and analyze most utilized substitutes for each recipe and ingredient and implement a substitution recommender system or even machine learning based substitution mechanisms. 
+
+\smallheadline{Test and demo data}
+
+The Foodo data records are based on ingredients data that we received as a starting point. The transfer process included internationalization, elimination of redundant and messy data entries, converting amount information to standardized units (gram and milliliter), and transferring the data records to the Foodo \texttt{ingredient} mongoose model. Currently, the MongoDB document store contains 304 ingredients. After transferring the data to the Foodo database, we further needed to add information to each ingredient data entry. For that purpose, the Foodo frontend implements four features for administrators. For each ingredient, we used the \texttt{SetAllergies}, \texttt{SetCategory} and the \texttt{SetLifestyles} administrator pages of the Foodo frontend to add allergies, categories and lifestyle information. To support the data preparation process, we also utilized helper scripts. For instance, we were able to automatically set lactose and fructose allergies based on already set categories. We furthermore created 15 standard recipes for testing and demo purposes through the \texttt{CreateRecipe} administrator page.
