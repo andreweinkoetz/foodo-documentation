@@ -1,0 +1,112 @@
+\begin{table}[!ht]
+	\hspace{-5pt}
+	\begin{scriptsize}
+		\begin{tabularx}{\textwidth + 5pt}{| @{\hspace{3pt}} M | @{\hspace{3pt}} N | @{\hspace{3pt}} M | @{\hspace{3pt}} M | @{\hspace{3pt}} B |}
+		\hline
+		\textbf{Endpoint URI} & \textbf{Method} & \textbf{Parameters} & \textbf{Returns} & \textbf{Description}\\
+		\hline
+		/auth/token & POST & username, password  & bearer token & password grant type \\
+		\hline
+		/auth/authorize & GET & -  & bearer token & for auth. code \& refresh token \\
+		\hline
+		/auth/register & POST & username, password  & created user object & registering new user \\
+		\hline
+	\end{tabularx}
+	\end{scriptsize}
+	\caption{Authentication (oAuth2) endpoints in Foodo backend}
+	\vspace{1em}
+\end{table}
+
+\begin{table}[!ht]
+	\hspace{-5pt}
+	\begin{scriptsize}
+		\begin{tabularx}{\textwidth + 5pt}{| @{\hspace{3pt}} H | @{\hspace{3pt}} N | @{\hspace{3pt}} N | @{\hspace{3pt}} O | @{\hspace{3pt}} B |}
+			\hline
+			\textbf{Endpoint URI} & \textbf{Method} & \textbf{Parameters} & \textbf{Returns} & \textbf{Description}\\
+			\hline
+			/cooking/start \lockicon & POST & recipe name string &  [cookingEvent object] & Starts cooking process \\
+			\hline
+			/cooking/subsitutes \lockicon & GET & -  &  [ingredient object] & Uses algorithm to calculate top 3 subsitutes \\
+			\hline
+			/cooking/subsitute/:selectedNr \lockicon & GET & URL param: subsitute \#  &  custom object & Substitutes the unhealthy ingredient with the selected ingredient \\
+			\hline
+			/cooking/block \lockicon & POST & -  &  custom object & Blocks a subsitution for an unhealthy ingredient \\
+			\hline
+		\end{tabularx}
+	\end{scriptsize}
+	\caption{Cooking endpoints in Foodo backend (Alexa only) }
+\end{table}
+
+\begin{table}[!ht]
+	\hspace{-5pt}
+	\begin{scriptsize}
+		\begin{tabularx}{\textwidth + 5pt}{| @{\hspace{3pt}} B | @{\hspace{3pt}} N | @{\hspace{3pt}} N | @{\hspace{3pt}} O | @{\hspace{3pt}} H |}
+		\hline
+		\textbf{Endpoint URI} & \textbf{Method} & \textbf{Parameters} & \textbf{Returns} & \textbf{Description}\\
+		\hline
+		/user/me \lockicon & GET & -  &  [user object] & - \\
+		\hline
+		/user/allergies \lockicon & PUT, POST, DELETE & allergy object  & updated user object & update, insert \& remove allergy \\
+		\hline
+		/user/dislikes \lockicon & PUT, POST, DELETE & ingredient object  & updated user object & update, insert \& remove dislike \\
+		\hline
+		/user/lifestyle \lockicon & POST & lifestyle object  & updated user object & overwrites current lifestyle \\
+		\hline
+		/user/goal \lockicon & POST & goal object  & updated user object & overwrites current goal \\
+		\hline
+		/user/level \lockicon & PUT & level string  & updated user object & sets the user level (e.g. subscribed) \\
+		\hline
+		/user/recipes \lockicon & GET & -  &  [pers. recipe object] & - \\
+		\hline
+		/user/recipes \lockicon & PUT, POST & pers. recipe object  & updated pers. recipe object & update \& insert pers. recipe \\
+		\hline
+		/user/recipes/substitute \lockicon & PUT, DELETE & custom object  & updated pers. recipe object & substitutes ingredient in recipe \& reverts substitution  \\
+		\hline
+	\end{tabularx}
+	\end{scriptsize}
+	\caption{User endpoints in Foodo backend}
+\vspace{1em}
+\end{table}
+
+
+
+\begin{table}[!ht]
+	\hspace{-5pt}
+	\begin{scriptsize}
+		\begin{tabularx}{\textwidth + 5pt}{| @{\hspace{3pt}} B | @{\hspace{3pt}} N | @{\hspace{3pt}} N | @{\hspace{3pt}} O | @{\hspace{3pt}} H |}
+		\hline
+		\textbf{Endpoint URI} & \textbf{Method} & \textbf{Parameters} & \textbf{Returns} & \textbf{Description}\\
+		\hline
+		/ingredients & GET & -  &  [ingredients object] & - \\
+		\hline
+		/ingredients/categories/:id & GET & URL param: category id  &  [ingredients object] & Filters all ingredients by selected category \\
+		\hline
+		/recipes & GET & -  &  [recipes object] & - \\
+		\hline
+		/recipes/:id/substitutes & GET & URL param: recipe id  &  custom object & Uses algorithm to calculate subsitutes for unhealthy ingredients \\
+		\hline
+	\end{tabularx}
+	\end{scriptsize}
+	\caption{Ingredient \& recipe related endpoints in Foodo backend}
+	\vspace{1em}
+\end{table}
+
+\begin{table}[!ht]
+	\begin{scriptsize}
+	\hspace{-5pt}
+	\begin{tabularx}{\textwidth + 5pt}{| @{\hspace{3pt}} B | @{\hspace{3pt}} N | @{\hspace{3pt}} N | @{\hspace{3pt}} O | @{\hspace{3pt}} H |}
+		\hline
+		\textbf{Endpoint URI} & \textbf{Method} & \textbf{Parameters} & \textbf{Returns} & \textbf{Description}\\
+		\hline
+		/subscription/create \lockicon & POST & subscription object  &  custom object & - \\
+		\hline
+		/subscription/cancel \lockicon & POST & subscription object  &  custom object & Removes subscription and sets user to 'free' \\
+		\hline
+		/subscription/subscribed \lockicon & PUT & subscription object  &  custom object & Activates subscription and sets user to 'subscribed' \\
+		\hline
+	\end{tabularx}
+	\end{scriptsize}
+	\caption{Subscription endpoints in Foodo backend}
+\end{table}
+
+

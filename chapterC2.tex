@@ -14,8 +14,12 @@ The software systems consists of six different components that have been organis
 	\item MongoDB document store (database)
 \end{enumerate}
 
-Foodo follows the state-of-the-art design decision to separate the corresponding code into separate repositories. The lambda function and the Alexa skill however share one repository as recommended by the Amazon Development Documentation. The algorithm is furthermore integrated into the backend as a git submodule to support interoperability and loosely coupling which allows to plug-in different substitution algorithms in the future. The components frontend, backend, lambda function and Alexa skill furthermore communicate through HTTP or related protocols. In conclusion, the Foodo application can be described as a microservice-oriented application that follows the client-server model. The REST backend and the lambda function can be considered as servers for the Alexa skill and frontend which act as clients. In addition, the backend also serves the lambda function in order to query the database. The backend abstracts the database layer from all other components to support separation of concerns and to reduce code redundancy. 
+Foodo follows the state-of-the-art design decision to separate the corresponding code into separate repositories. The lambda function and the Alexa skill however share one repository as recommended by the Amazon Development Documentation. 
 
+The algorithm is furthermore integrated into the backend as a git submodule to support interoperability and loosely coupling which allows to plug-in different substitution algorithms in the future. The components frontend, backend, lambda function and Alexa skill furthermore communicate through HTTP or related protocols. 
+
+In conclusion, the Foodo application can be described as a microservice-oriented application that follows the client-server model. The REST backend and the lambda function can be considered as servers for the Alexa skill and frontend which act as clients. In addition, the backend also serves the lambda function in order to query the database. The backend abstracts the database layer from all other components to support separation of concerns and to reduce code redundancy. 
+\clearpage
 \subsection{Infrastructure}
 As for the infrastructure, the Foodo software system is hosted on the \gls{aws} cloud and can therefore be described as a cloud-native application. This design decision allows us to scale, load-balance, and secure the application based on state-of-the-art standards set by big cloud providers. Furthermore, by using AWS, we also profit from low to zero costs through the pay-as-you-go pricing model. Following AWS services are utilized for the different software components:
 
@@ -90,12 +94,16 @@ We used the package manager \gls{npm} to organize third party libraries and fram
 
 \smallheadline{React web app}
 
-React is not opinionated about folder structure and code structure but we followed a well adapted pattern of component-container abstraction. React uses components to isolate the frontend code into separate entities. With the component-container abstraction, following naming convention is used: Components are pure components without state and containers are stateful components that handle the application state. In addition, the frontend utilizes many of the latest React features like context (global state management), custom hooks (functional separation-of-concern pattern to share state or functionality between components) and the use of functional components instead of classes using the new hook API. This enabled us to build highly performant frontend code that shares API data across the application and manages user state efficiently while also providing a straightforward scalable and reusable component infrastructure. 
+React is not opinionated about folder structure and code structure but we followed a well adapted pattern of component-container abstraction. React uses components to isolate the frontend code into separate entities. With the component-container abstraction, following naming convention is used: 
+
+Components are pure components without state and containers are stateful components that handle the application state. In addition, the frontend utilizes many of the latest React features like context (global state management), custom hooks (functional separation-of-concern pattern to share state or functionality between components) and the use of functional components instead of classes using the new hook API. 
+
+This enabled us to build highly performant frontend code that shares API data across the application and manages user state efficiently while also providing a straightforward scalable and reusable component infrastructure. 
 
 \smallheadline{Design Choices}
 
 The Foodo frontend UI follows the design principles of Google’s \textit{Material Design}\footnote{Material Design - https://material.io} and is based on the design language of \textit{Ant Design}\footnote{Ant Design - https://ant.design}. This enables Foodo to have a consistent design and UI across all pages. It relies heavily on the SCSS features of extending css-classes and reusing css-values which allows to predefine design choices like font, coloring, padding, margin, box shadows and border boxes, and content alignment once for the whole application. This also enables to switch between design prototypes very quickly. The \texttt{\_variables.scss} file was used to store the global variables of the SCSS designs. 
-
+\vspace{-2em}
 \begin{figure}[ht]
 	\captionsetup{justification=centering}
 	\begin{center}
@@ -129,6 +137,7 @@ The frontend code is furthermore structured as follows:
 
 As mentioned above, the React components are divided into stateful components (\texttt{container}) and pure functional components (\texttt{components}). An example for a pure component would be the \texttt{button} component that offers an abstraction layer for a predefined button with corresponding styling to reuse across the application. As you can derive from the code example (see figure \ref{fig:button}), the Foodo frontend utilizes latest JavaScript syntactic sugar notations like arrow functions and \gls{jsx}.
 
+\vspace{-2em}
 \begin{figure}[!ht]
 	\captionsetup{justification=centering}
 	\centering
@@ -138,9 +147,9 @@ As mentioned above, the React components are divided into stateful components (\
 		\label{fig:button}
 \end{figure}
 
-The \texttt{App.js} container on the other hand, handles the application routing (based on \texttt{react-router-dom}), renders the \texttt{navbar} and the content of the application, while also rendering all context providers with the global state on mounting of the application. The app container won’t be used more than once within the application tree but it is used as a container for content and smaller containers to wrap functionality for the user. 
+The \texttt{App.js} container on the other hand, handles the application routing (based on \texttt{react-} \texttt{router-dom}), renders the \texttt{navbar} and the content of the application, while also rendering all context providers with the global state on mounting of the application. The app container won’t be used more than once within the application tree but it is used as a container for content and smaller containers to wrap functionality for the user. 
 
-The \texttt{hooks} folder is used to abstract functionality with the new hook API. Those functions offer sharable functionality for the different components. For instance, we created \texttt{useDeviceState.js} as a hook to validate if the current device \texttt{isMobile}, a boolean based on \texttt{eventListeners} of the browser API that refreshes all dependent components if \texttt{isMobile} changes. Furthermore, hooks (in contrast to global state) reduce the risk of side-effects as different components inject the hook's state without sharing it application-wide. 
+The \texttt{hooks} folder is used to abstract functionality with the new hook API. Those functions offer sharable functionality for the different components. For instance, we created the custom hook \texttt{useDeviceState.js} (see figure \ref{fig:hook})  to validate if the current device \texttt{isMobile}, a boolean based on \texttt{eventListeners} of the browser API that refreshes all dependent components if \texttt{isMobile} changes. Furthermore, hooks (in contrast to global state) reduce the risk of side-effects as different components inject the hook's state without sharing it application-wide. 
 
 \begin{figure}[!ht]
 	\captionsetup{justification=centering}
@@ -148,10 +157,16 @@ The \texttt{hooks} folder is used to abstract functionality with the new hook AP
 	\includegraphics[scale=0.28]{Ressourcen/img/code/hook.png}
 	\vspace{-4em}
 	\caption{Device state in custom hook (\texttt{useDeviceState.js})}
-	\label{fig:button}
+	\vspace{3em}
+	\label{fig:hook}
 \end{figure}
+The \texttt{provider} folder comprises the context and context-providers. The context API is used to share global (API-)data across different components. For instance, the \texttt{RecipesProvider} (see figure \ref{fig:provider}) holds and shares the standard recipes with the full application scope.
 
-The \texttt{provider} folder comprises the context and context-providers. The context API is used to share global (API-)data across different components. For instance, the \texttt{RecipesProvider} holds and shares the standard recipes with the full application scope. As most of the context providers get initialised as children of the application container component, they have to be rendered only once on application startup. This enables Foodo to get the application state from the backend (e.g. all recipes, ingredients, user recipes) on initial rendering of the application. By that, the visible loading time for the user is reduced significantly. Moreover, as the application container only renders once, the context-provder will stay within the React \gls{dom} until the user closes the browser tab. This allows the Foodo frontend to retrieve the data only once during the user session which saves network data and further reduces lag times.
+As most of the context providers get initialised as children of the application container component, they have to be rendered only once on application startup. This enables Foodo to get the application state from the backend (e.g. all recipes, ingredients, user recipes) on initial rendering of the application. By that, the visible loading time for the user is reduced significantly. Moreover, as the application container only renders once, the context-provder will stay within the React \gls{dom} until the user closes the browser tab. This allows the Foodo frontend to retrieve the data only once during the user session which saves network data and further reduces lag times.
+
+The \texttt{service} folder is used to abstract the HTTP functionality which is not part of the React library. All services utilize the third-party library \textit{axios} to implement the \gls{ajax} requests. 
+
+The basic HTTP functionality (\texttt{GET}, \texttt{POST}, \texttt{PUT}, \texttt{DELETE}, header creation) is implemented in \texttt{foodo-api/httpService.js}. Building on top of it, \texttt{oAuthService.js} handles the oAuth2 authorization and authentication of the user. The actual REST endpoints get called by specific functions in the different subfolders e.g. \texttt{user/userService.js} offers the functions to login and register a user while \texttt{user/profile} \texttt{Service.js} offers AJAX calls to post and put profile information of a user. \vspace{6em}
 
 \begin{figure}[!ht]
 	\captionsetup{justification=centering}
@@ -159,11 +174,12 @@ The \texttt{provider} folder comprises the context and context-providers. The co
 	\includegraphics[scale=0.28]{Ressourcen/img/code/context.png}
 	\vspace{-4em}
 	\caption{Global state shared by context-provider (\texttt{RecipeProvider.js})}
+	\label{fig:provider}
+	\vspace{3em}
 \end{figure}
 
-The \texttt{service} folder is used to abstract the HTTP functionality which is not part of the React library. All services utilize the third-party library \textit{axios} to implement the \gls{ajax} requests. The basic HTTP functionality (\texttt{GET}, \texttt{POST}, \texttt{PUT}, \texttt{DELETE}, header creation) is implemented in \texttt{foodo-api/httpService.js}. Building on top of it, \texttt{oAuthService.js} handles the oAuth2 authorization and authentication of the user. The actual REST endpoints get called by specific functions in the different subfolders e.g. \texttt{user/userService.js} offers the functions to login and register a user while \texttt{user/profileService.js} offers AJAX calls to post and put profile information of a user.
-
 The \texttt{utilities} folder offers a variety of utility classes and helper functions that do not fit in any of the other folders. The internationalizion folder for example holds the \texttt{i18n} implementation to support global string management as a lightweight language module. The \texttt{localStorage} of the browser API is also abstracted as helper functions in the utility folder and used to store the user token, redirect urls, user locale and other information into the persistent session and local storage. 
+\clearpage
 
 \section{Lambda function architecture} \label{lambda}
 
@@ -182,7 +198,13 @@ The lambda function provides Alexa intent handlers using Node.js and the \texttt
 
 The lambda function starts on usage of the Alexa skill through an Alexa device or the Alexa Developer Console and runs the \texttt{index.js} script. Within \texttt{index.js} the \texttt{ask-sdk} skill builder utility is called to load the intent handlers from the corresponding folder and build the Alexa skill. The \texttt{internationalization} folder is used as a middleware (interceptor) and builds on the same \texttt{i18n} package used in the frontend. 
 
-Each intent handler provides two functions. \texttt{canHandle} defines a boolean return value if the intent handler can process the intent from the Alexa skill that is currently activated by the user and \texttt{handle} is used to implement the actual functionality of the lambda function. For instance, the \texttt{RecipeHandler} is responsible for \texttt{RecipeIntents} and when called, \texttt{handle} will output a list of recipes that Foodo offers to the user. The \texttt{CookingHandler} can handle the \texttt{CookingIntent} and offers a complex dialogue to navigate the user through the cooking process. The \texttt{CookingHandler} therefore utilizes \texttt{requestEnvelope} variables that can be filled with values by the user and are passed to the lambda function by the Alexa device. The current dialogue step gets identified by the intent handler by checking which variables have been filled already. At first the handler checks if the recipe variable has been filled by the user. If not, we output a prompt to the user to ask what he wants to cook. If the recipe value is filled already, we move on and make an AJAX call to the backend to retrieve the user recipe of the currently authorized user by the recipe name. We further prompt if the user wants to substitute the worst ingredient. If the user replies with \textit{yes}, Alexa will insert the value yes into the requestEnvelope \texttt{yesNoValue} and we can further retrieve possible substitutes for the user recipe and prompt the different substitution options to the user. If the user answers with a valid option (one, two, or three as defined in the dialogue model), we use the named index to identify the selected substitute and call the backend again to alter the user recipe. This step is needed as it is currently not supported in Alexa intents to dynamically offer \texttt{requestEnvelope} values for a variable that the user can select. As a workaround, the user can pick indices (hard coded \texttt{requestEnvelope} values 1, 2, 3) that refer to dynamic values of the substitute names that we output to the user through made AJAX calls. Finally, we inform the user about the change and terminate the interaction. 
+Each intent handler provides two functions. \texttt{canHandle} defines a boolean return value if the intent handler can process the intent from the Alexa skill that is currently activated by the user and \texttt{handle} is used to implement the actual functionality of the lambda function. For instance, the \texttt{RecipeHandler} is responsible for \texttt{RecipeIntents} and when called, \texttt{handle} will output a list of recipes that Foodo offers to the user. 
+
+The \texttt{CookingHandler} can handle the \texttt{CookingIntent} and offers a complex dialogue to navigate the user through the cooking process. The \texttt{CookingHandler} therefore utilizes \texttt{requestEnvelope} variables that can be filled with values by the user and are passed to the lambda function by the Alexa device. The current dialogue step gets identified by the intent handler by checking which variables have been filled already. 
+
+At first the handler checks if the recipe variable has been filled by the user. If not, we output a prompt to the user to ask what he wants to cook. If the recipe value is filled already, we move on and make an AJAX call to the backend to retrieve the user recipe of the currently authorized user by the recipe name. We further prompt if the user wants to substitute the worst ingredient. If the user replies with \textit{yes}, Alexa will insert the value yes into the requestEnvelope \texttt{yesNoValue} and we can further retrieve possible substitutes for the user recipe and prompt the different substitution options to the user. If the user answers with a valid option (one, two, or three as defined in the dialogue model), we use the named index to identify the selected substitute and call the backend again to alter the user recipe. 
+
+This step is needed as it is currently not supported in Alexa intents to dynamically offer \texttt{requestEnvelope} values for a variable that the user can select. As a workaround, the user can pick indices (hard coded \texttt{requestEnvelope} values 1, 2, 3) that refer to dynamic values of the substitute names that we output to the user through made AJAX calls. Finally, we inform the user about the change and terminate the interaction. 
 
 \begin{figure}[ht]
 	\captionsetup{justification=centering}
@@ -198,6 +220,7 @@ The different intent handlers define the possible user interactions and facilita
 
 The backend of Foodo provides a REST API using the Node.js web application framework Express. Built on Chrome's JavaScript runtime, Node.js facilitates building lightweight and scalable network applications, as it uses an event-driven, non-blocking I/O model. Express creates a thin layer of basic web application features on top of Node.js which can be extended by middleware modules. The abstraction of complex HTTP methods, extending the API by middleware modules and the lightweight architecture significantly reduce the overhead of building a robust and flexible REST API.
 
+\vspace{-1em}
 \smallheadline{Code Structure}
 
 The folder structure is designed as follows:
@@ -213,9 +236,9 @@ The folder structure is designed as follows:
 	.3 middlewares.js .
 	.3 oauth.js .
 }
-
 We utilize the third-party package mongoose to organize and access the MongoDB database. The \texttt{model} folder is used to define the mongoose models that are used to structure data models based on a simple and straightforward JSON object. The \texttt{recipe.js} model for instance defines a schema with the following attributes:
 
+\begin{scriptsize}
 \begin{lstlisting}[language=json,firstnumber=1,caption={Example of recipe "Lasagne"},captionpos=b]
 {
 	"_id": {
@@ -238,14 +261,16 @@ We utilize the third-party package mongoose to organize and access the MongoDB d
 	"servings": []
 }
 \end{lstlisting}
+\end{scriptsize}
 
-Thereby, the backend enfores a basic structure that every standard recipe has to follow. Every standard recipe holds a \texttt{name}, a \texttt{preparation time}, a \texttt{meal} definition, a \texttt{difficulty}, an image URL and an array of ingredients and some further attributes. The \texttt{ingredients array} further encapsulates the two attributes \texttt{amount} and \texttt{ingredient}. \texttt{ingredient} is implemented as a foreign key \texttt{\_id} which points to a ingredient of the ingredient schema. Those foreign keys can further be populated on REST request. This allows the backend to specify precise response values for the different REST routes.  As a conclusion, mongoose allows to design relationships between data objects and we utilized this to implement the food taxonomy (see section \ref{database}).
+Thereby, the backend enforces a basic structure that every standard recipe has to follow. Every standard recipe holds a \texttt{name}, a \texttt{preparation time}, a \texttt{meal} definition, a \texttt{difficulty}, an image URL and an array of ingredients and some further attributes. The \texttt{ingredients array} further encapsulates the two attributes \texttt{amount} and \texttt{ingredient}. \texttt{ingredient} is implemented as a foreign key \texttt{\_id} which points to a ingredient of the ingredient schema. Those foreign keys can further be populated on REST request. This allows the backend to specify precise response values for the different REST routes.  As a conclusion, mongoose allows to design relationships between data objects and we utilized this to implement the food taxonomy (see section \ref{database}).
 
-The \texttt{controllers} folder is used to implement the REST endpoints that are defined in the \texttt{routes} folder. Routes define the structure of the express REST API (how) whereas the controllers implement the actual functionality (what) of the different endpoints. We used the state-of-the-art naming convention of a REST api. The backend offers the following REST routes and HTTP functions.
+The \texttt{controllers} folder is used to implement the REST endpoints that are defined in the \texttt{routes} folder. Routes define the structure of the express REST API (how) whereas the controllers implement the actual functionality (what) of the different endpoints. We used the state-of-the-art naming convention of a REST api. The backend offers the following REST routes and HTTP functions (Endpoints marked with \lockicon\footnote{Icon made by Freepik www.flaticon.com licensed by CC 3.0 BY} require a valid access token to be sent within the request).
 
-(Hier fehlt noch das Listing aller Routes - schöne Darstellung)
+\input{endpoints}
 
 The different endpoints can be accessed by the lambda function and the frontend. The subscription route further gets called by PayPal webhooks and allow the backend to verify user subscriptions. All endpoints operate in the same way, retrieving the request data out of the request object, operating on the MongoDB database through mongoose and sending a response back to the client. The Express middleware handles the user authentication via the oAuth2 flow and passes the user object to all the restricted API endpoints fencing the actual REST endpoints from the authorization layer. 
+\clearpage
 
 \smallheadline{Utilities}
 
@@ -253,6 +278,7 @@ The backend implements some utilities besides the express application. The \text
 
 \section{Algorithm} \label{algorithm}
 The endpoint \texttt{/recipes/substitutes/} is used during the substitution process and calls the substitution algorithm (git submodule). The substitution algorithm searches for substitutes to improve the given recipe according to the user's preferences. The user's preferences consist of:
+\vspace{-1em}
 \begin{itemize}
 	\itemsep-0.5em 
 	\item a nutrition goal ("Eating healthy" or "Reducing healthily weight"),
@@ -260,7 +286,14 @@ The endpoint \texttt{/recipes/substitutes/} is used during the substitution proc
 	\item dislikes (list of disliked ingredients or "None"), and
 	\item allergies ("Gluten", "Lactose", "Fructose" or "None").
 \end{itemize} 
-For determining how healthy an ingredient is, the algorithm relies on the NutriScore (\textbf{ADD CITATION}). This score reaches from 'A' (healthy) to 'E' (unhealthy) and was developed by nutrition scientists for rating the healthiness of dishes. It is mandatory to print it on products sold in France. If the user's goal is "Reducing healthily weight", the algorithm calculates the energy density of ingredients, as a low energy density of the nutrition is found to be linked to weight reduction (\textbf{ADD CITATION}). Moreover, the algorithm relies on a food taxonomy to find potential substitutes. Our food taxonomy consists of twelve categories, namely: 'Dairy Product',  'Oils, fats and shortenings', 'Meat and poultry',    'Fish and seafood', 'Vegetables', 'Fruits', 'Breads, cereals and grains', 'Soups (canned and diluted)', 'Desserts and sweets', 'Nuts and seeds', 'Beverages' and 'Spices'. The algorithm always searches for substitutes within the same food category of the ingredient to be substituted.
+\vspace{1em}
+
+For determining how healthy an ingredient is, the algorithm relies on the NutriScore (\textbf{ADD CITATION}). This score reaches from 'A' (healthy) to 'E' (unhealthy) and was developed by nutrition scientists for rating the healthiness of dishes. It is mandatory to print it on products sold in France. 
+
+If the user's goal is "Reducing healthily weight", the algorithm calculates the energy density of ingredients, as a low energy density of the nutrition is found to be linked to weight reduction (\textbf{ADD CITATION}). Moreover, the algorithm relies on a food taxonomy to find potential substitutes. 
+
+Our food taxonomy consists of twelve categories, namely: 'Dairy Product',  'Oils, fats and shortenings', 'Meat and poultry',    'Fish and seafood', 'Vegetables', 'Fruits', 'Breads, cereals and grains', 'Soups (canned and diluted)', 'Desserts and sweets', 'Nuts and seeds', 'Beverages' and 'Spices'. The algorithm always searches for substitutes within the same food category of the ingredient to be substituted.
+\clearpage
 
 \smallheadline{Steps of the algorithm}
 
@@ -288,7 +321,7 @@ After having identified the bad ingredients the algorithm tries to find suitable
 When the algorithm has identified a list of suitable substitutes for each of the bad ingredients, it sorts these lists ascendingly based on the NutriScore, so that the healthiest substitute is in the first place. The results, containing the ranked substitutes per bad ingredient, are returned to the calling endpoint.
 
 Additionally, the algorithm offers a function for the Alexa skill which identifies the worst ingredient of a recipe based on the NutriScore and returns the three best substitutes for it in an ordered list. 
-
+\clearpage
 \section{Database} \label{database}
 The MongoDB document store is abstracted by the backend and organised by the mongoose package. Following schemas have been designed through the backend and organize the Foodo data layer: 
 
@@ -306,7 +339,6 @@ The recipe describes a basic recipe that holds a set of ingredients. Each ingred
 
 \begin{figure}[ht]
 	\captionsetup{justification=centering}
-	\begin{center}
 	\begin{itemize} 
 		\itemsep-0.5em 
 		\item Dairy products
@@ -324,13 +356,20 @@ The recipe describes a basic recipe that holds a set of ingredients. Each ingred
 	\end{itemize}
 	\caption{Currently supported categories in the \texttt{category} model}
 	\label{categories}
-	\end{center}
 \end{figure}
 
 \smallheadline{Food taxonomy}
 
-One important task of implementing the Foodo software system was designing a food taxonomy that would allow to implement a sophisticated substitution algorithm. Out of our perspective, personalization was one key aspect that the food taxonomy had to offer to the Foodo user. Therefore, as mentioned above, the user object holds attributes for disliked ingredients, allergies, a lifestyle and a personal goal . Furthermore, through the cooking process (frontend cooking page or Alexa cooking intent), the selected standard recipe is used as a starting point for the current user's personalized recipe (\texttt{personalized recipe} mongoose model). Once the user has a personalized user recipe for a corresponding standard recipe, the user recipe will be used instead. The user recipe holds further attributes for personalization. Every user recipe holds an array to block possible substitutes. If the user denies a substitute, the Foodo system will remember this decision. To offer fitting and related substitutes for each ingredient (see section \ref{algorithm}) each ingredient also holds information about supported lifestyles, allergies, NutriScore information and a category (see figure \ref{categories}). The definition of categories allows the substitution algorithm to filter for fitting ingredients. Finally, all past substitutions are saved in the user's personalized recipe and logged in the \texttt{substitution} mongoose model. This would allow the Foodo software system to learn and analyze most utilized substitutes for each recipe and ingredient and implement a substitution recommender system or even machine learning based substitution mechanisms. 
+One important task of implementing the Foodo software system was designing a food taxonomy that would allow to implement a sophisticated substitution algorithm. From our perspective, personalization was one key aspect that the food taxonomy had to offer to the Foodo user. Therefore, as mentioned above, the user object holds attributes for disliked ingredients, allergies, a lifestyle and a personal goal . 
+
+Furthermore, through the cooking process (frontend cooking page or Alexa cooking intent), the selected standard recipe is used as a starting point for the current user's personalized recipe (\texttt{personalized recipe} mongoose model). Once the user has a personalized user recipe for a corresponding standard recipe, the user recipe will be used instead. 
+
+The user recipe holds further attributes for personalization. Every user recipe holds an array to block possible substitutes. If the user denies a substitute, the Foodo system will remember this decision. To offer fitting and related substitutes for each ingredient (see section \ref{algorithm}) each ingredient also holds information about supported lifestyles, allergies, NutriScore information and a category (see figure \ref{categories}). The definition of categories allows the substitution algorithm to filter for fitting ingredients. 
+
+Finally, all past substitutions are saved in the user's personalized recipe and logged in the \texttt{substitution} mongoose model. This would allow the Foodo software system to learn and analyze most utilized substitutes for each recipe and ingredient and implement a substitution recommender system or even machine learning based substitution mechanisms. 
 
 \smallheadline{Test and demo data}
 
-The Foodo data records are based on ingredients data that we received as a starting point. The transfer process included internationalization, elimination of redundant and messy data entries, converting amount information to standardized units (gram and milliliter), and transferring the data records to the Foodo \texttt{ingredient} mongoose model. Currently, the MongoDB document store contains 304 ingredients. After transferring the data to the Foodo database, we further needed to add information to each ingredient data entry. For that purpose, the Foodo frontend implements four features for administrators. For each ingredient, we used the \texttt{SetAllergies}, \texttt{SetCategory} and the \texttt{SetLifestyles} administrator pages of the Foodo frontend to add allergies, categories and lifestyle information. To support the data preparation process, we also utilized helper scripts. For instance, we were able to automatically set lactose and fructose allergies based on already set categories. We furthermore created 15 standard recipes for testing and demo purposes through the \texttt{CreateRecipe} administrator page.
+The Foodo data records are based on ingredients data that we received as a starting point. The transfer process included internationalization, elimination of redundant and messy data entries, converting amount information to standardized units (gram and milliliter), and transferring the data records to the Foodo \texttt{ingredient} mongoose model. 
+
+Currently, the MongoDB document store contains 304 ingredients. After transferring the data to the Foodo database, we further needed to add information to each ingredient data entry. For that purpose, the Foodo frontend implements four features for administrators. For each ingredient, we used the \texttt{SetAllergies}, \texttt{SetCategory} and the \texttt{SetLifestyles} administrator pages of the Foodo frontend to add allergies, categories and lifestyle information. To support the data preparation process, we also utilized helper scripts. For instance, we were able to automatically set lactose and fructose allergies based on already set categories. We furthermore created 15 standard recipes for testing and demo purposes through the \texttt{CreateRecipe} administrator page.
