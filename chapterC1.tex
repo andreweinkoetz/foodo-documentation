@@ -1,0 +1,256 @@
+\chapter{Functionality/ Use case}
+\section*{About us}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotA.png}
+		\vspace{-3em}
+		\caption{About-Us Subpage 1}
+	\end{center}
+\end{figure}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotB.png}
+		\vspace{-3em}
+		\caption{About-Us Subpage 3}
+	\end{center}
+\end{figure}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotC.png}
+		\vspace{-3em}
+		\caption{About-Us Subpage 4}
+	\end{center}
+\end{figure}
+Initially, a page visitor starts on our About-Us page, which is also accessible by clicking on the About-Us index tab in the navigation menu. This page is separated into four subpages and mainly serves the purpose of informing the user about Foodo's services. If a user decides to give Foodo a try by either clicking on the Get Started button on the first subpage (screenshot 1.1) or by selecting a recipe he wants to cook on the last subpage (screenshot 1.4), he will be forwarded to our Registration-Page (see next section).
+\section*{Login/Registration}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotD.png}
+		\vspace{-3em}
+		\caption{Registration}
+	\end{center}
+\end{figure}
+Before a user can use Foodo’s services, he first needs to create an account. Therefore, he will always be redirected to the Registration/Login-Page (screenshot 2), when he tries to call a service URL or clicks the mentioned button or recipe selector in the previous section (About-Us page). By inserting an individual username, which has not been taken already, and a hopefully secure password, the user can create a new account for himself. He also has the option to login with an already registered account by clicking on Login in the right upper corner and inserting his previously created credentials in the following form.
+\section*{Navigation bar}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotE.png}
+		\vspace{-3em}
+		\caption{Navbar}
+	\end{center}
+\end{figure}
+In the previous sections, there was no navigation bar at the top of the screen, as one could see in the screenshots. This was due to the limited options a user has without registered account. Now, after a user has logged into his account, he can find a navigation bar, shown in screenshot 3. By clicking on the profile icon in the upper right corner, a menu panel will be shown with additional navigation options for the user. Overall, he has the following navigation options:
+\begin{itemize}
+\item Home: The main page of Foodo, described in the next section
+\item My Profile: The user's settings and preferences regarding food items and nutrition; described in section Profile Page.
+\item Statistics: The user's improvements depicted with graphics and values; described in section Statistics.
+\item Preferences: This will open another small menu panel with two submenus. Clicking on Languages will again open another small menu panel, where the user can choose between the offered languages (currently only English and German). Clicking on Password will direct the user to a form, where he can insert his new password.
+\item About: This will direct the user to the About-Page again.
+\item Logout: This is quite self explanatory and will logout the user from his current account.
+\end{itemize}
+\section*{Home Page}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotF.png}
+		\vspace{-3em}
+		\caption{Home page recipe selector }
+	\end{center}
+\end{figure}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotG.png}
+		\vspace{-3em}
+		\caption{Home page recipe tiles}
+	\end{center}
+\end{figure}
+This is the main page of our application, where the user can browse through a variety of recipes. To find a recipe he likes, he can either click on the 'Select your recipe…' input field and select a recipe out of the appearing list or browse through our displayed recipes below. These are categorized into four groups:
+\begin{itemize}
+\item Your Favorites
+\item Breakfast
+\item Lunch
+\item Dinner
+\end{itemize}	
+However, before the user can start the substitution process, he is advised to go to his personal preferences and select at least a personal nutrition goal. This instruction is also shown in a yellow box, as shown in screenshot 4.1.
+\section*{Recipe detail view}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotH.png}
+		\vspace{-3em}
+		\caption{Recipe detail view without selected user goal}
+	\end{center}
+\end{figure}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotI.png}
+		\vspace{-3em}
+		\caption{Recipe detail view with selected user goal}
+	\end{center}
+\end{figure}
+The first part of the detailed recipe overview consists of a picture and a list of ingredients. Depending on whether the user already selected his personal goal, he either sees screenshot 5.1 or 5.2. For those ingredients, where there exists a better substitute in our database based on the nutriscore, a Substitute button will be displayed. By clicking on it, the user can select a suitable substitute as shown in screenshot 5.3. (You can find more information regarding the substitution algorithm in chapter C.2 Architecture - Algorithm). In the newly opened window he can see his current NutriScore and possible alternatives for the selected ingredients together with their individual NutriScore. If the user already substituted an ingredient with another one and wishes to revert the substitution, he can click on the meanwhile displayed Revert button next to the substitute he wishes to revert. 
+There is also the option to personalise the recipe by clicking on the pencil icon on top of the ingredients list. This will open the window shown in screenshot 5.4, where the user can add or remove current ingredients.
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotJ.png}
+		\vspace{-3em}
+		\caption{Potential substitutes for beef}
+	\end{center}
+\end{figure}
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotK.png}
+		\vspace{-3em}
+		\caption{Recipe personalisation}
+	\end{center}
+\end{figure}
+
+Below the recipe details, the user can also find some nutritional facts consisting of graphs and statistics regarding the (modified) recipe. He can scroll through three different representations of the nutritional composition of his recipe:
+\begin{itemize}
+\item Pie chart: This is the initially shown diagram, which merely displays the ratio of carbohydrates, fats and proteins without additional numbers (screenshot 5.5).
+\item Table: Here, the user can find the most important components of the nutrition table (screenshot 5.6).
+\item Bar graph: This graph shows the most important nutrition components in percentage of the optimal daily intake of an adult based on the (Quelle einbinden, EU Guidelines). It also shows how much percent the user improved or deteriorated his recipe with the current substitutions (screenshot 5.7).
+\end{itemize}
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotL.png}
+		\vspace{-3em}
+		\caption{Pie chart}
+	\end{center}
+\end{figure}
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotM.png}
+		\vspace{-3em}
+		\caption{Nutrition table}
+	\end{center}
+\end{figure}
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotN.png}
+		\vspace{-3em}
+		\caption{Bar graph}
+	\end{center}
+\end{figure}
+
+
+\section*{Profile Page}
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotO.png}
+		\vspace{-3em}
+		\caption{Profile Page goal and lifestyle}
+	\end{center}
+\end{figure}
+
+As already mentioned above, the user first has to select his personal goal before he can use the substitution service. To improve the received substitutes from the substitution algorithm, it is advised for the user to also insert additional personal information, currently consisting of:
+\begin{itemize}
+\item His goal: Reduce weight or live healthier.
+\item His lifestyle: Vegetarian, low carb or vegan
+\item His dislikes: A list of ingredients he does not like and therefore wishes to not be shown as substitutes.
+\item His allergies: A list of ingredients he can not eat and therefore should not be shown as substitutes.
+\end{itemize}
+Changes to a user’s profile will be saved automatically and can always be changed again.
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotP.png}
+		\vspace{-3em}
+		\caption{Profile Page dislikes and allergies}
+	\end{center}
+\end{figure}
+
+\section*{Statistics Page}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotQ.png}
+		\vspace{-3em}
+		\caption{User statistics}
+	\end{center}
+\end{figure}
+By clicking on Statistics in the navbar, a user can get an overview about his nutritional career with Foodo. Throughout his substitution history, some personal nutritional data will be gathered and stored for each user. He can see how many NutriScore points he improved his recipes in total, as well as the amount of the five main nutritional values. Improvements, such as gaining protein or fiber and reducing sugar, salt or saturated fats, will be highlighted in green while negative changes will be highlighted in red.
+
+\section*{PayPal Premium}
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotR.png}
+		\vspace{-3em}
+		\caption{Premium opportunity}
+	\end{center}
+\end{figure}
+From time to time, the user will see the popup shown in screenshot 8.1, where he can acquire a premium status. This will change the Free label next to the profile icon in the upper right corner to a star and will help the developer team to implement additional features.
+
+\section*{Mobile Version}
+Foodo is also available for all mobile devices with access to a web browser. Some examples are shown in the screenshots below.
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/iphoneA.png}
+		\vspace{-3em}
+		\caption{Home page mobile version}
+	\end{center}
+\end{figure}
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/iphoneB.png}
+		\vspace{-3em}
+		\caption{Profile page mobile version}
+	\end{center}
+\end{figure}
+
+\vspace{-2em}
+\begin{figure}[H]
+	\captionsetup{justification=centering}
+	\begin{center}
+		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/iphoneC.png}
+		\vspace{-3em}
+		\caption{Recipe detail view mobile version}
+	\end{center}
+\end{figure}
+
+
