@@ -4,26 +4,25 @@ We divided the limitations in obstacles we faced during the development of Foodo
 
 \section{Obstacles}
 
-\subsection{Pre-existing standards}
+\subsection*{Pre-existing standards}
 One of the main limitations we have been faced with, was the lack of a database with substitutes, one could build upon. Even if we would have decided to implement a learning algorithm computing substitutes, we would have still be missing a test set to verify the results. Information about possible replacements is scattered around the internet in cooking blogs and forums. These are mostly directed at vegans, vegetarians and people suffering from allergies. Additionally, these recommendations are often linked to a certain recipe, making it harder to generalize possible relationships.
 The same applies to algorithms or even guidelines and rules of thumb.
 
-\subsection{Context}
+\subsection*{Context}
 When it comes to assessing how well an ingredient performs as a substitute, there are multiple properties that have to be considered. Namely the consistency, texture, taste, look and in our case especially the nutritional value. The impact the ingredient has on the consistency and texture of the dish has to be taken into account, otherwise a stew might get turned into a soup. The toughest nut to crack is the adjustment of the list of possible substitutes to the context of a dish. With context being the symbiosis between taste and texture and therefore something hard to assess in digital terms. Applesauce as an egg replacement can work in the context of a cake, but not in an omelette. Furthermore, an egg can have multiple purposes or functions within a dish. It can work as a binding or loosening agent and add taste, color and moisture. A fully fletched substitution-algorithm would have to infer the purpose of the ingredient as well as the context of the dish based on the provided recipe. Additionally, substitutes which aren’t fit for the preparation conditions (e.g. heat) have to be filtered beforehand. 
-
 
 \section{Current limits of the programm}
 Every limit demands actions from the user, to compensate for the lack of automation. The more the app evolves, the less input is necessary.
 
-\subsection{How good is the substitute}
+\subsection*{How good is the substitute}
 As mentioned in 5.1.2, there are multiple properties influencing the suitability of a substitute. At the moment we are only considering the category of a food item, as well as its nutritional value. If it fits in regards of taste and texture has to be decided by the user.
 
-\subsection{Preparation steps}
+\subsection*{Preparation steps}
 Currently we don't provide preparation steps to guide a user. Because a major issues (besides gathering the data) is to assess how the preparation changes through a substitute. The time a dish needs to stay in the oven might differ, or even the way the substitute is prepared (sliced, smashed, peeled). This can often be easily inferred by the user, but it's hard for a program to do so.
 
-\subsection{How much should be substituted}
+\subsection*{How much should be substituted}
 Currently we provide information based on the assumption that an ingredient is completely substituted. But there are cases, in which one would only like to substitute a certain percentage or use a mixture out of different alternatives. Further, some substitutes only work as a 'thinner'. Next to this it always has to be considered, how much has been substituted already. Applesauce for example, can be used as an replacement for eggs, butter or as a natural sweetener. But it shouldn’t substitute all of them. 
 
-\subsection{Cross-substitute effects}
+\subsection*{Cross-substitute effects}
 The applesauce-example from above illustrates an additional detail, that should be considered in the future. Substitutes provide other properties than their respective counterparts. If we use applesauce as an egg replacement, the whole pastry is getting sweeter, which in return should lead to a decrease in the amount of sugar needed.
 The effect that one substitute choice has on the amount of other ingredients used, is mainly relevant for sugar, salt and fats/oil.
