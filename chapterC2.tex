@@ -70,7 +70,7 @@ Each request for a protected resource requires authorization. The oAuth2 server 
 
 \smallheadline{Internationalization}
 
-We used the third-party library \texttt{i18n} to utilize internationalization based on locales. The Foodo application currently supports English and German but could very easily be expanded to any language. \texttt{i18n} is used in the lambda function and frontend simoutanely. 
+We used the third-party library \texttt{i18n} to utilize internationalization based on locales. The Foodo application currently supports English and German but could very easily be expanded to any language. \texttt{i18n} is used in the lambda function and frontend simultaneously. 
 
 \smallheadline{Environment Handling}
 
@@ -162,7 +162,7 @@ The \texttt{hooks} folder is used to abstract functionality with the new hook AP
 \end{figure}
 The \texttt{provider} folder comprises the context and context-providers. The context API is used to share global (API-)data across different components. For instance, the \texttt{RecipesProvider} (see figure \ref{fig:provider}) holds and shares the standard recipes with the full application scope.
 
-As most of the context providers get initialised as children of the application container component, they have to be rendered only once on application startup. This enables Foodo to get the application state from the backend (e.g. all recipes, ingredients, user recipes) on initial rendering of the application. By that, the visible loading time for the user is reduced significantly. Moreover, as the application container only renders once, the context-provder will stay within the React \gls{dom} until the user closes the browser tab. This allows the Foodo frontend to retrieve the data only once during the user session which saves network data and further reduces lag times.
+As most of the context providers get initialised as children of the application container component, they have to be rendered only once on application startup. This enables Foodo to get the application state from the backend (e.g. all recipes, ingredients, user recipes) on initial rendering of the application. By that, the visible loading time for the user is reduced significantly. Moreover, as the application container only renders once, the context-provider will stay within the React \gls{dom} until the user closes the browser tab. This allows the Foodo frontend to retrieve the data only once during the user session which saves network data and further reduces lag times.
 
 The \texttt{service} folder is used to abstract the HTTP functionality which is not part of the React library. All services utilize the third-party library \textit{axios} to implement the \gls{ajax} requests. 
 
@@ -269,7 +269,7 @@ The \texttt{controllers} folder is used to implement the REST endpoints that are
 
 \input{endpoints}
 
-The different endpoints can be accessed by the lambda function and the frontend. The subscription route further gets called by PayPal webhooks and allow the backend to verify user subscriptions. All endpoints operate in the same way, retrieving the request data out of the request object, operating on the MongoDB database through mongoose and sending a response back to the client. The Express middleware handles the user authentication via the oAuth2 flow and passes the user object to all the restricted API endpoints fencing the actual REST endpoints from the authorization layer. 
+The different endpoints can be accessed by the lambda function and the frontend. The subscription route further gets called by PayPal webhooks and allows the backend to verify user subscriptions. All endpoints operate in the same way, retrieving the request data out of the request object, operating on the MongoDB database through mongoose and sending a response back to the client. The Express middleware handles the user authentication via the oAuth2 flow and passes the user object to all the restricted API endpoints fencing the actual REST endpoints from the authorization layer. 
 \clearpage
 
 \smallheadline{Utilities}
