@@ -1,50 +1,35 @@
-\chapter{Functionality/ Use case}
-\section*{About us}
-\vspace{-1em}
+\chapter{Features}
+\vspace{-2em}
+\subsection*{About us}
+\vspace{0.5em}
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
-		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotA.png}
-		\vspace{-3em}
-		\caption{About-Us Subpage 1}
-		\label{fig:subpage}
-	\end{center}
-\end{figure}
-\vspace{-1em}
-\begin{figure}[H]
-	\captionsetup{justification=centering}
-	\begin{center}
-		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotB.png}
-		\vspace{-3em}
-		\caption{About-Us Subpage 3}
-	\end{center}
-\end{figure}
-\vspace{-1em}
-\begin{figure}[H]
-	\captionsetup{justification=centering}
-	\begin{center}
-		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotC.png}
-		\vspace{-3em}
-		\caption{About-Us Subpage 4}
-		\label{fig:subpage4}
+		\includegraphics[scale=0.15]{Ressourcen/img/screenshots/screenshotA.png}\hfill
+		\includegraphics[scale=0.146]{Ressourcen/img/screenshots/About2.png}\hfill
+		\includegraphics[scale=0.15]{Ressourcen/img/screenshots/screenshotB.png}\hfill
+		\includegraphics[scale=0.14]{Ressourcen/img/screenshots/screenshotC.png}
+		\vspace{-1em}
+		\caption{About-Us}
+		\label{fig:aboutus}
 	\end{center}
 \end{figure}
 \vspace{-3em}
-Initially, a page visitor starts on our \texttt{About-Us} page which is also accessible by clicking on the \texttt{About-Us} index tab in the navigation menu. This page is separated into four subpages and mainly serves the purpose of informing the user about Foodo's services. If a user decides to give Foodo a try by either clicking on the \texttt{Get Started} button on the first subpage (see figure \ref{fig:subpage}) or by selecting a recipe he wants to cook on the last subpage (see figure \ref{fig:subpage4}), he will be forwarded to our \texttt{Login/Registration-Page} (see next section).
-\section*{Login/Registration}
-\vspace{-2em}
+Initially, a page visitor starts on our \texttt{About-Us} page which is also accessible by clicking on the \texttt{About-Us} index tab in the navigation menu. This page is separated into four subpages and mainly serves the purpose of informing the user about Foodo's services. If a user decides to give Foodo a try by either clicking on the \texttt{Get Started} button on the first subpage or by selecting a recipe he wants to cook on the last subpage (see figure \ref{fig:aboutus}), he will be forwarded to our \texttt{Login/Registration-Page} (see next section).
+\subsection*{Login/Registration}
+\vspace{0.5em}
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
-		\includegraphics[scale=0.28]{Ressourcen/img/screenshots/screenshotD.png}
-		\vspace{-3em}
+		\includegraphics[scale=0.23]{Ressourcen/img/screenshots/screenshotD.png}
+		\vspace{-2em}
 		\caption{Registration}
 		\label{fig:registration}
 	\end{center}
 \end{figure}
 Before a user can use Foodo’s services, he first needs to create an account. Therefore, the user will always be redirected to the \texttt{Login/Registration-Page} (see figure \ref{fig:registration}) when the user tries to call a service URL or clicks the mentioned button or recipe selector in the previous section (\texttt{About-Us page}). By inserting an individual username, which has not been taken already, and a hopefully secure password, the user can create a new account. The user also has the option to login with an already registered account by clicking on \texttt{Login} in the right upper corner and inserting his previously created credentials in the following form.
-\section*{Navigation bar}
-\vspace{-2em}
+\subsection*{Navigation bar}
+\vspace{0.5em}
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
@@ -64,8 +49,8 @@ In the previous sections, there was no navigation bar at the top of the screen, 
 \item \textbf{About}: This will direct the user to the \texttt{About-Page} again.
 \item \textbf{Logout}: This is quite self explanatory and will logout the user from his current account.
 \end{itemize}
-\section*{Home Page}
-\vspace{-2em}
+\subsection*{Home page}
+\vspace{0.5em}
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
@@ -80,13 +65,13 @@ In the previous sections, there was no navigation bar at the top of the screen, 
 	\captionsetup{justification=centering}
 	\begin{center}
 		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotG.png}
-		\vspace{-3em}
+		\vspace{-1em}
 		\caption{Home page recipe tiles}
 		\label{fig:recipeTiles}
 	\end{center}
 \end{figure}
+\vspace{-2em}
 This is the main page of our application where the user can browse through a variety of recipes. Browsing the available recipes and eventually choosing one recipe to cook can be achieved either by clicking on the \texttt{'Select your recipe…'} input field and selecting a recipe out of the appearing list (see figure \ref{fig:recipeSelector}) or by scrolling through the displayed recipe boxes below (see figure \ref{fig:recipeTiles}). The different recipe boxes have been designed to appear visual appealing by showing preview pictures of the dishes. Furthermore, each box shows useful personalized information about supported lifestyle and allergies on hover. To improve the user experience, the boxes are also categorized into four standard groups and two categories that match the user's lifestyle and allergies:
-\clearpage
 \begin{itemize}
 \item Your Favorites
 \item Breakfast
@@ -107,8 +92,8 @@ However, before the user can start the substitution process, it is advised to go
 	\label{fig:profilesetting}
 \end{figure}
 
-\section*{Recipe detail view}
-\vspace{-1em}
+\subsection*{Recipe detail view}
+\vspace{0.5em}
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\centering
@@ -154,29 +139,27 @@ Below the recipe details, the user can also find some nutritional facts consisti
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
-		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotL.png}\hfill
-		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotM.png}\hfill
-		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotN.png}
+		\includegraphics[scale=0.35]{Ressourcen/img/screenshots/screenshotL.png}\hfill
+		\includegraphics[scale=0.35]{Ressourcen/img/screenshots/screenshotM.png}\hfill
+		\includegraphics[scale=0.35]{Ressourcen/img/screenshots/screenshotN.png}
 		\vspace{-3em}
 	\end{center}
 	\caption{Pie chart, table and bar graph for a recipe}
 	\label{fig:detailedStatistics}
 \end{figure}
 
-\section*{Profile Page}
-
-\vspace{-1em}
+\subsection*{Profile page}
+\vspace{0.5em}
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
-		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotO.png}
+		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotO.png}
 		\vspace{-2em}
 		\caption{Profile page goal and lifestyle}
 	\end{center}
 \end{figure}
-\vspace{-3.5em}
+\vspace{-2em}
 As already mentioned above, the user first has to select a personal goal before the substitution process becomes available. To improve the received substitutes from the substitution algorithm, it is advised for the user to also insert additional personal information, currently consisting of:
-\vspace{-3em}
 
 \begin{itemize}
 \item \textbf{Goal}: Reduce weight or live healthier.
@@ -184,21 +167,20 @@ As already mentioned above, the user first has to select a personal goal before 
 \item \textbf{Dislikes}: A list of ingredients he does not like and therefore wishes to not be shown as substitutes.
 \item \textbf{Allergies}: A list of ingredients he can not eat and therefore should not be shown as substitutes.
 \end{itemize}
-\vspace{-1em}
+
 Changes to a user’s profile will be saved automatically and can always be changed again.
-\vspace{-1em}
 
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
-		\includegraphics[scale=0.25]{Ressourcen/img/screenshots/screenshotP.png}
+		\includegraphics[scale=0.30]{Ressourcen/img/screenshots/screenshotP.png}
 		\vspace{-2em}
 		\caption{Profile page dislikes and allergies}
 	\end{center}
 \end{figure}
 
-\section*{Statistics Page}
-\vspace{-2em}
+\subsection*{Statistics page}
+\vspace{0.5em}
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
@@ -207,10 +189,11 @@ Changes to a user’s profile will be saved automatically and can always be chan
 		\caption{User statistics}
 	\end{center}
 \end{figure}
+		\vspace{-2em}
 By clicking on \texttt{Statistics} in the navbar, a user can get an overview about its nutritional career with Foodo. Throughout the substitution history, some personal nutritional data will be gathered and stored for each user. Through the statistics, one can see how many NutriScore points the user has improved over all recipes in total as well as the amount of the five main nutritional values. Improvements, such as gaining protein or fiber and reducing sugar, salt or saturated fats, will be highlighted in green while negative changes will be highlighted in red.
 
-\section*{PayPal Premium}
-\vspace{-2em}
+\subsection*{PayPal Premium}
+\vspace{0.5em}
 \begin{figure}[H]
 	\captionsetup{justification=centering}
 	\begin{center}
@@ -222,7 +205,7 @@ By clicking on \texttt{Statistics} in the navbar, a user can get an overview abo
 \end{figure}
 After a specified free-to-use period, the user will see the popup shown in figure \ref{fig:paypal} where he can acquire a premium status through subscribing to the Foodo Paypal subscription plan. This will change the \texttt{Free} label next to the profile icon in the upper right corner to a star and will help the developer team to implement additional features. Currently, the free-to-use period allows the user to have up to five personalized recipes and the popup will show when the user tries to view more recipes. It is also to mention that the popup is currently skippable and the subscription plan is not mandatory but voluntary.  
 \clearpage
-\section*{Mobile Version}
+\subsection*{Mobile version}
 Foodo is also available for all mobile devices with access to a web browser. Some examples are shown in the figures below.
 
 \begin{figure}[htp]

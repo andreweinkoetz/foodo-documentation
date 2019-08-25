@@ -1,6 +1,6 @@
 \chapter{Architecture}
 \section{Foodo Software System}
-\subsection{Overview}
+\subsection*{Overview}
 The Foodo software system is a distributed web based application that follows state-of-the-art architecture techniques. In the following, the architecture of the Foodo application will be described in a top-down manner.
  
 The software systems consists of six different components that have been organised in four different code repositories. Those six components are:
@@ -20,7 +20,7 @@ The algorithm is furthermore integrated into the backend as a git submodule to s
 
 In conclusion, the Foodo application can be described as a microservice-oriented application that follows the client-server model. The REST backend and the lambda function can be considered as servers for the Alexa skill and frontend which act as clients. In addition, the backend also serves the lambda function in order to query the database. The backend abstracts the database layer from all other components to support separation of concerns and to reduce code redundancy. 
 \clearpage
-\subsection{Infrastructure}
+\subsection*{Infrastructure}
 As for the infrastructure, the Foodo software system is hosted on the \gls{aws} cloud and can therefore be described as a cloud-native application. This design decision allows us to scale, load-balance, and secure the application based on state-of-the-art standards set by big cloud providers. Furthermore, by using AWS, we also profit from low to zero costs through the pay-as-you-go pricing model. Following AWS services are utilized for the different software components:
 
 \begin{enumerate}
@@ -34,14 +34,12 @@ As for the infrastructure, the Foodo software system is hosted on the \gls{aws} 
 	\item Alexa skill is hosted on the Amazon Alexa Developer Console
 \end{enumerate}
 
-\smallheadline{Code Flow}
-
+\subsection*{Code flow}
 We incorporated HTTPS for our front- and backend to follow state-of-the-art security guidelines that are also mandatory (enforced by Amazon) for the account linking of Alexa skills. On top of HTTPS, the Foodo application uses \gls{rest} as a communication paradigm based on \gls{json}.
 
 Authorization and authentication are essential parts of a distributed and secure microservice architecture and require a state-of-the-art protocol implementation. The Foodo software system implements the \gls{oauth2} framework (as defined in RFC 6749) to offer its users a sophisticated authorization and authentication flow, as described below.  
 
-\smallheadline{Authentication Flow}
-
+\subsection*{Authentication flow}
 The oAuth2 framework is based on issuing tokens to give a user permission to access restricted parts of the application. Foodo incorporates three different grant types to provide an easy way for the user to login and fulfill all requirements of the Alexa account linking. 
 
 The first grant type \textit{Resource Owner Password Credentials} handles the login and sign-up process in the React web app. At first, the user enters his username and password into a webform and submits them to the backend server. Once the backend successfully validated the credentials, it responds with a newly generated access token, which is then securely stored by the React web app.
@@ -61,22 +59,19 @@ The last grant type \textit{Refresh Token} provides a convenient way to renew an
 
 When a request attempts to access a protected resource with an expired access token, the backend denies this access. The React web app includes an automatic code flow to identify a failed attempt through the specified error code and requests a new access token using the locally stored refresh token. The backend validates the refresh token and issues a new access token.
 
-\smallheadline{Authorization Flow}
-
+\subsection*{Authorization flow}
 Each request for a protected resource requires authorization. The oAuth2 server implementation for Node.js checks if the HTTP header of a request contains the Authorization property. This property has to include the token type (\textit{Bearer}) as well as the access token which was provided during the authentication process. For example: \vspace{-1.5em}
 \begin{center}
 	\texttt{Authorization: Bearer b0279b5a647d68241d0e9a3852bfc694a487b989}
 \end{center}
 
-\smallheadline{Internationalization}
-
+\subsection*{Internationalization}
 We used the third-party library \texttt{i18n} to utilize internationalization based on locales. The Foodo application currently supports English and German but could very easily be expanded to any language. \texttt{i18n} is used in the lambda function and frontend simultaneously. 
 
-\smallheadline{Environment Handling}
-
+\subsection*{Environment handling}
 All repositories utilize \texttt{.env} files to manage environment variables to enable test, development and production environments. We utilize these logics to enable logging, switching home paths and other environment based information. Furthermore, the \texttt{.env} files allow us to encapsulate sensible information like passwords or private keys from the code repositories.
 
-\section{Frontend Architecture}
+\section{Frontend architecture}
 
 The frontend of the Foodo software system is implemented as a web app that runs in the user’s browser. The JavaScript library \textit{React} was used to implement a state-of-the-art \gls{ui}. Furthermore, the following technologies have been used:
 
@@ -92,16 +87,14 @@ The frontend of the Foodo software system is implemented as a web app that runs 
 
 We used the package manager \gls{npm} to organize third party libraries and frameworks. We built our application on top of \texttt{create-react-app}, an official React skeleton application that comes with pre-configured \texttt{Webpack}, \texttt{Babel}, \texttt{Eslint} and \texttt{SCSS} support. To further configure the coding environment, we ejected out of \texttt{create-react-app}.
 
-\smallheadline{React web app}
-
+\subsection*{React web app}
 React is not opinionated about folder structure and code structure but we followed a well adapted pattern of component-container abstraction. React uses components to isolate the frontend code into separate entities. With the component-container abstraction, following naming convention is used: 
 
 Components are pure components without state and containers are stateful components that handle the application state. In addition, the frontend utilizes many of the latest React features like context (global state management), custom hooks (functional separation-of-concern pattern to share state or functionality between components) and the use of functional components instead of classes using the new hook API. 
 
 This enabled us to build highly performant frontend code that shares API data across the application and manages user state efficiently while also providing a straightforward scalable and reusable component infrastructure. 
 
-\smallheadline{Design Choices}
-
+\subsection*{Design choices}
 The Foodo frontend UI follows the design principles of Google’s \textit{Material Design}\footnote{Material Design - https://material.io} and is based on the design language of \textit{Ant Design}\footnote{Ant Design - https://ant.design}. This enables Foodo to have a consistent design and UI across all pages. It relies heavily on the SCSS features of extending css-classes and reusing css-values which allows to predefine design choices like font, coloring, padding, margin, box shadows and border boxes, and content alignment once for the whole application. This also enables to switch between design prototypes very quickly. The \texttt{\_variables.scss} file was used to store the global variables of the SCSS designs. 
 \vspace{-2em}
 \begin{figure}[ht]
@@ -113,8 +106,7 @@ The Foodo frontend UI follows the design principles of Google’s \textit{Materi
 	\end{center}
 \end{figure}
 
-\smallheadline{Folder structure}
-
+\subsection*{Folder structure}
 The frontend code is furthermore structured as follows:
 
 \dirtree{%
@@ -221,8 +213,7 @@ The different intent handlers define the possible user interactions and facilita
 The backend of Foodo provides a REST API using the Node.js web application framework Express. Built on Chrome's JavaScript runtime, Node.js facilitates building lightweight and scalable network applications, as it uses an event-driven, non-blocking I/O model. Express creates a thin layer of basic web application features on top of Node.js which can be extended by middleware modules. The abstraction of complex HTTP methods, extending the API by middleware modules and the lightweight architecture significantly reduce the overhead of building a robust and flexible REST API.
 
 \vspace{-1em}
-\smallheadline{Code Structure}
-
+\subsection*{Code structure}
 The folder structure is designed as follows:
 \vspace{1em}
 \dirtree{%
@@ -272,8 +263,7 @@ The \texttt{controllers} folder is used to implement the REST endpoints that are
 The different endpoints can be accessed by the lambda function and the frontend. The subscription route further gets called by PayPal webhooks and allows the backend to verify user subscriptions. All endpoints operate in the same way, retrieving the request data out of the request object, operating on the MongoDB database through mongoose and sending a response back to the client. The Express middleware handles the user authentication via the oAuth2 flow and passes the user object to all the restricted API endpoints fencing the actual REST endpoints from the authorization layer. 
 \clearpage
 
-\smallheadline{Utilities}
-
+\subsection*{Utilities}
 The backend implements some utilities besides the express application. The \texttt{script} folder in the root folder contains utility scripts. The \texttt{data-import.js} script was used to import and convert the initial dataset that we received for the Foodo project into our data schema. The \texttt{internationalization.js} script was used to translate the ingredients names of the initial ingredient data to english to support internationalization. We utilized the Google Cloud API for that matter. The file \texttt{src/logger.js} implements a sophisticated logger based on the third-party package \texttt{winston} which allowed us to define log levels both for localhost and for the production system to ease debugging and error handling. 
 
 \section{Algorithm} \label{algorithm}
@@ -295,8 +285,7 @@ If the user's goal is "Reducing healthily weight", the algorithm calculates the 
 Our food taxonomy consists of twelve categories, namely: 'Dairy Product',  'Oils, fats and shortenings', 'Meat and poultry',    'Fish and seafood', 'Vegetables', 'Fruits', 'Breads, cereals and grains', 'Soups (canned and diluted)', 'Desserts and sweets', 'Nuts and seeds', 'Beverages' and 'Spices'. The algorithm always searches for substitutes within the same food category of the ingredient to be substituted.
 \clearpage
 
-\smallheadline{Steps of the algorithm}
-
+\subsection*{Steps of the algorithm}
 The algorithm consists of two major steps. In the first step the algorithm iterates through the recipe's ingredients and identifies bad ingredients. An ingredient is bad if it fulfills at least one of the following requirements:
 \vspace{-1em}
 \begin{itemize}
@@ -336,8 +325,7 @@ The MongoDB document store is abstracted by the backend and organised by the mon
 	\end{center}
 \end{figure}
 
-\smallheadline{Data model relationships}
-
+\subsection*{Data model relationships}
 The recipe describes a basic recipe that holds a set of ingredients. Each ingredient has a category and a set of allergies (gluten, lactose, fructose) and lifestyles (vegan, vegetarian, none, or low carbohydrates). The user model is connected to the authorization flow data objects client, token, and code. Tokens are used to handle the authorization of the user, whereas clients define the different clients (frontend and lambda function) that the user can use to authenticate. The code schema is used to offer authorization codes for the user to authorize clients (Alexa) to act in behalf of the user. The user also holds subscriptions. We defined a simple access level hierarchy (admin, subscribed, free) that is implemented via the subscription model. In addition, the user holds profile information about his lifestyle, goal (eat healthy, reduce weight), allergies and dislikes (ingredients). The user is also linked to its personalized recipes that contain a reference to the original standard recipe and a new set of current ingredients and a list of blocked substitutes that the user does not wanted to change. The cooking schema is used as a state management for the Alexa cooking intent. If the user has indicated within the dialogue flow that he wants to substitute, the possible substitutes for the current recipe and user are stored in the cooking object and later accessed if the user decides which substitute he wants to use in the substitution process (see section \ref{lambda}).
 
 \vspace{-1em}
@@ -357,8 +345,7 @@ The recipe describes a basic recipe that holds a set of ingredients. Each ingred
 		\item Spices
 	\end{itemize}
 
-\smallheadline{Food taxonomy}
-
+\subsection*{Food taxonomy}
 One important task of implementing the Foodo software system was designing a food taxonomy that would allow to implement a sophisticated substitution algorithm. From our perspective, personalization was one key aspect that the food taxonomy had to offer to the Foodo user. Therefore, as mentioned above, the user object holds attributes for disliked ingredients, allergies, a lifestyle and a personal goal . 
 
 Furthermore, through the cooking process (frontend cooking page or Alexa cooking intent), the selected standard recipe is used as a starting point for the current user's personalized recipe (\texttt{personalized recipe} mongoose model). Once the user has a personalized user recipe for a corresponding standard recipe, the user recipe will be used instead. 
@@ -367,8 +354,7 @@ The user recipe holds further attributes for personalization. Every user recipe 
 
 Finally, all past substitutions are saved in the user's personalized recipe and logged in the \texttt{substitution} mongoose model. This would allow the Foodo software system to learn and analyze most utilized substitutes for each recipe and ingredient and implement a substitution recommender system or even machine learning based substitution mechanisms. 
 
-\smallheadline{Test and demo data}
-
+\subsection*{Test and demo data}
 The Foodo data records are based on ingredients data that we received as a starting point. The transfer process included internationalization, elimination of redundant and messy data entries, converting amount information to standardized units (gram and milliliter), and transferring the data records to the Foodo \texttt{ingredient} mongoose model. 
 
 Currently, the MongoDB document store contains 304 ingredients. After transferring the data to the Foodo database, we further needed to add information to each ingredient data entry. For that purpose, the Foodo frontend implements four features for administrators. For each ingredient, we used the \texttt{SetAllergies}, \texttt{SetCategory} and the \texttt{SetLifestyles} administrator pages of the Foodo frontend to add allergies, categories and lifestyle information. To support the data preparation process, we also utilized helper scripts. For instance, we were able to automatically set lactose and fructose allergies based on already set categories. We furthermore created 15 standard recipes for testing and demo purposes through the \texttt{CreateRecipe} administrator page.
