@@ -14,7 +14,7 @@
 Quellen/Quellen.bib
 
 ## Intermediate documents:
-documentation.pdf
+# documentation.pdf
 *.dvi
 *.xdv
 *-converted-to.*

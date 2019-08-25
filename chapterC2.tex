@@ -278,9 +278,9 @@ The endpoint \texttt{/recipes/substitutes/} is used during the substitution proc
 \end{itemize} 
 \vspace{1em}
 
-For determining how healthy an ingredient is, the algorithm relies on the NutriScore (\textbf{ADD CITATION}). This score reaches from 'A' (healthy) to 'E' (unhealthy) and was developed by nutrition scientists for rating the healthiness of dishes. It is mandatory to print it on products sold in France. 
+For determining how healthy an ingredient is, the algorithm relies on the NutriScore \autocite{julia_nutri-score_2017}. This score reaches from 'A' (healthy) to 'E' (unhealthy) and was developed by nutrition scientists for rating the healthiness of dishes. It is mandatory to print it on products sold in France. 
 
-If the user's goal is "Reducing healthily weight", the algorithm calculates the energy density of ingredients, as a low energy density of the nutrition is found to be linked to weight reduction (\textbf{ADD CITATION}). Moreover, the algorithm relies on a food taxonomy to find potential substitutes. 
+If the user's goal is "Reducing healthily weight", the algorithm calculates the energy density of ingredients, as a low energy density of the nutrition is found to be linked to weight reduction \autocite{ello-martin_influence_2005}. Moreover, the algorithm relies on a food taxonomy to find potential substitutes. 
 
 Our food taxonomy consists of twelve categories, namely: 'Dairy Product',  'Oils, fats and shortenings', 'Meat and poultry',    'Fish and seafood', 'Vegetables', 'Fruits', 'Breads, cereals and grains', 'Soups (canned and diluted)', 'Desserts and sweets', 'Nuts and seeds', 'Beverages' and 'Spices'. The algorithm always searches for substitutes within the same food category of the ingredient to be substituted.
 \clearpage
