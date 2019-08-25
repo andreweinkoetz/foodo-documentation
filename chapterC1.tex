@@ -30,7 +30,7 @@
 	\end{center}
 \end{figure}
 \vspace{-3em}
-Initially, a page visitor starts on our \texttt{About-Us} page, which is also accessible by clicking on the \texttt{About-Us} index tab in the navigation menu. This page is separated into four subpages and mainly serves the purpose of informing the user about Foodo's services. If a user decides to give Foodo a try by either clicking on the \texttt{Get Started} button on the first subpage (see figure \ref{fig:subpage}) or by selecting a recipe he wants to cook on the last subpage (see figure \ref{fig:subpage4}), he will be forwarded to our \texttt{Login/Registration-Page} (see next section).
+Initially, a page visitor starts on our \texttt{About-Us} page which is also accessible by clicking on the \texttt{About-Us} index tab in the navigation menu. This page is separated into four subpages and mainly serves the purpose of informing the user about Foodo's services. If a user decides to give Foodo a try by either clicking on the \texttt{Get Started} button on the first subpage (see figure \ref{fig:subpage}) or by selecting a recipe he wants to cook on the last subpage (see figure \ref{fig:subpage4}), he will be forwarded to our \texttt{Login/Registration-Page} (see next section).
 \section*{Login/Registration}
 \vspace{-2em}
 \begin{figure}[H]
@@ -42,7 +42,7 @@ Initially, a page visitor starts on our \texttt{About-Us} page, which is also ac
 		\label{fig:registration}
 	\end{center}
 \end{figure}
-Before a user can use Foodo’s services, he first needs to create an account. Therefore, he will always be redirected to the \texttt{Login/Registration-Page} (see figure \ref{fig:registration}), when he tries to call a service URL or clicks the mentioned button or recipe selector in the previous section (\texttt{About-Us page}). By inserting an individual username, which has not been taken already, and a hopefully secure password, the user can create a new account for himself. He also has the option to login with an already registered account by clicking on \texttt{Login} in the right upper corner and inserting his previously created credentials in the following form.
+Before a user can use Foodo’s services, he first needs to create an account. Therefore, the user will always be redirected to the \texttt{Login/Registration-Page} (see figure \ref{fig:registration}) when the user tries to call a service URL or clicks the mentioned button or recipe selector in the previous section (\texttt{About-Us page}). By inserting an individual username, which has not been taken already, and a hopefully secure password, the user can create a new account. The user also has the option to login with an already registered account by clicking on \texttt{Login} in the right upper corner and inserting his previously created credentials in the following form.
 \section*{Navigation bar}
 \vspace{-2em}
 \begin{figure}[H]
@@ -55,7 +55,7 @@ Before a user can use Foodo’s services, he first needs to create an account. T
 	\end{center}
 \end{figure}
 \vspace{-3em}
-In the previous sections, there was no navigation bar at the top of the screen, as one could see in the figures. This was due to the limited options a user has without registered account. Now, after a user has logged into his account, he can find a navigation bar, shown in figure \ref{fig:navbar}. By clicking on the profile icon in the upper right corner, a menu panel will be shown with additional navigation options for the user. Overall, he has the following navigation options:
+In the previous sections, there was no navigation bar at the top of the screen, as one could see in the figures. This was mainly a aesthetic design decision but also hides unavailable options for non-authenticated users. Now, after a user has logged into his account, the navigation bar is visible, shown in figure \ref{fig:navbar}. By clicking on the profile icon in the upper right corner, a menu panel will be shown with additional navigation options for the user. Overall, he has the following navigation options:
 \begin{itemize}
 \item \textbf{Home}: The main page of Foodo, described in the next section
 \item \textbf{My Profile}: The user's settings and preferences regarding food items and nutrition; described in section Profile Page.
@@ -85,7 +85,7 @@ In the previous sections, there was no navigation bar at the top of the screen, 
 		\label{fig:recipeTiles}
 	\end{center}
 \end{figure}
-This is the main page of our application, where the user can browse through a variety of recipes. To find a recipe he likes, he can either click on the \texttt{'Select your recipe…'} input field and select a recipe out of the appearing list (see figure \ref{fig:recipeSelector}) or browse through our displayed recipes below (see figure \ref{fig:recipeTiles}). These are categorized into four standard groups and two categories that match your lifestyle and allergies:
+This is the main page of our application where the user can browse through a variety of recipes. Browsing the available recipes and eventually choosing one recipe to cook can be achieved either by clicking on the \texttt{'Select your recipe…'} input field and selecting a recipe out of the appearing list (see figure \ref{fig:recipeSelector}) or by scrolling through the displayed recipe boxes below (see figure \ref{fig:recipeTiles}). The different recipe boxes have been designed to appear visual appealing by showing preview pictures of the dishes. Furthermore, each box shows useful personalized information about supported lifestyle and allergies on hover. To improve the user experience, the boxes are also categorized into four standard groups and two categories that match the user's lifestyle and allergies:
 \clearpage
 \begin{itemize}
 \item Your Favorites
@@ -95,7 +95,7 @@ This is the main page of our application, where the user can browse through a va
 \item Tolerated recipes (allergy-based)
 \item Lifestyle (e.g. Vegan, Vegetarian)
 \end{itemize}	
-However, before the user can start the substitution process, he is advised to go to his personal preferences and select at least a personal nutrition goal. This instruction is also shown in a yellow box, as shown in figure \ref{fig:profilesetting}.
+However, before the user can start the substitution process, it is advised to go to the personal preferences page and select at least a personal nutrition goal. This instruction is displayed in a yellow box, as shown in figure \ref{fig:profilesetting}.
 
 \vspace{-1em}
 \begin{figure}[H]
@@ -119,8 +119,8 @@ However, before the user can start the substitution process, he is advised to go
 		\label{fig:recipeDetail}
 \end{figure}
 \vspace{-2em}
-The first part of the detailed recipe overview consists of a picture and a list of ingredients. Depending on whether the user already selected his personal goal, he either sees the first or second view depicted in figure \ref{fig:recipeDetail}. For those ingredients, where there exists a better substitute in our database based on the nutriscore, a \texttt{Substitute} button will be displayed. By clicking on it, the user can select a suitable substitute as shown in figure \ref{fig:substitute}. (You can find more information regarding the substitution algorithm in chapter \emph{\ref{algorithm}  Algorithm}). In the newly opened window he can see his current NutriScore and possible alternatives for the selected ingredients together with their individual NutriScore. If the user already substituted an ingredient with another one and wishes to revert the substitution, he can click on the meanwhile displayed \texttt{Revert} button next to the substitute he wishes to revert. 
-There is also the option to personalise the recipe by clicking on the pencil icon on top of the ingredients list. This will open the window shown in figure \ref{fig:personalisation}, where the user can add or remove current ingredients.
+The first part of the detailed recipe overview consists of a picture and a list of ingredients. Depending on whether the user already selected his personal goal, the user either sees the first or second view depicted in figure \ref{fig:recipeDetail}. For those ingredients where there exists a better substitute in our database based on the nutriscore, a \texttt{Substitute} button will be displayed. By clicking on it, the user can select a suitable substitute as shown in figure \ref{fig:substitute}. (You can find more information regarding the substitution algorithm in chapter \emph{\ref{algorithm}  Algorithm}). In the newly opened window the user can see the current NutriScore and possible alternatives for the selected ingredients together with their individual NutriScore. If the user already substituted an ingredient and wishes to revert the substitution, this can be achieveed by clicking on the meanwhile displayed \texttt{Revert} button next to the substitute. 
+There is also the option to personalize the recipe by clicking on the pencil icon on top of the ingredients list. This will open the window shown in figure \ref{fig:personalisation} where the user can add or remove current ingredients.
 
 \vspace{-1em}
 \begin{figure}[H]
@@ -144,11 +144,11 @@ There is also the option to personalise the recipe by clicking on the pencil ico
 	\end{center}
 \end{figure}
 
-Below the recipe details, the user can also find some nutritional facts consisting of graphs and statistics regarding the (modified) recipe. He can scroll through three different representations of the nutritional composition of his recipe:
+Below the recipe details, the user can also find some nutritional facts consisting of graphs and statistics regarding the (modified) recipe. The user can click through three different representations of the nutritional composition of the currently shown recipe:
 \begin{itemize}
-\item \textbf{Pie chart}: This is the initially shown diagram, which merely displays the ratio of carbohydrates, fats and proteins without additional numbers (see figure \ref{fig:detailedStatistics} - first screenshot).
+\item \textbf{Pie chart}: This is the initially shown diagram which merely displays the ratio of carbohydrates, fats and proteins without additional numbers (see figure \ref{fig:detailedStatistics} - first screenshot).
 \item \textbf{Table}: Here, the user can find the most important components of the nutrition table (see figure \ref{fig:detailedStatistics} - second screenshot).
-\item \textbf{Bar graph}: This graph shows the most important nutrition components in percentage of the optimal daily intake of an adult based on the (Quelle einbinden, EU Guidelines). It also shows how much percent the user improved or deteriorated his recipe with the current substitutions (see figure \ref{fig:detailedStatistics} - third screenshot).
+\item \textbf{Bar graph}: This graph shows the most important nutrition components in percentage of the optimal daily intake of an adult based on the (Quelle einbinden, EU Guidelines). It also shows how much percent the user improved or deteriorated its personalized recipe with the current substitutions (see figure \ref{fig:detailedStatistics} - third screenshot).
 \end{itemize}
 
 \begin{figure}[H]
@@ -175,7 +175,7 @@ Below the recipe details, the user can also find some nutritional facts consisti
 	\end{center}
 \end{figure}
 \vspace{-3.5em}
-As already mentioned above, the user first has to select his personal goal before he can use the substitution service. To improve the received substitutes from the substitution algorithm, it is advised for the user to also insert additional personal information, currently consisting of:
+As already mentioned above, the user first has to select a personal goal before the substitution process becomes available. To improve the received substitutes from the substitution algorithm, it is advised for the user to also insert additional personal information, currently consisting of:
 \vspace{-3em}
 
 \begin{itemize}
@@ -207,7 +207,7 @@ Changes to a user’s profile will be saved automatically and can always be chan
 		\caption{User statistics}
 	\end{center}
 \end{figure}
-By clicking on \texttt{Statistics} in the navbar, a user can get an overview about his nutritional career with Foodo. Throughout his substitution history, some personal nutritional data will be gathered and stored for each user. He can see how many NutriScore points he improved his recipes in total, as well as the amount of the five main nutritional values. Improvements, such as gaining protein or fiber and reducing sugar, salt or saturated fats, will be highlighted in green while negative changes will be highlighted in red.
+By clicking on \texttt{Statistics} in the navbar, a user can get an overview about its nutritional career with Foodo. Throughout the substitution history, some personal nutritional data will be gathered and stored for each user. Through the statistics, one can see how many NutriScore points the user has improved over all recipes in total as well as the amount of the five main nutritional values. Improvements, such as gaining protein or fiber and reducing sugar, salt or saturated fats, will be highlighted in green while negative changes will be highlighted in red.
 
 \section*{PayPal Premium}
 \vspace{-2em}
@@ -220,7 +220,7 @@ By clicking on \texttt{Statistics} in the navbar, a user can get an overview abo
 		\label{fig:paypal}
 	\end{center}
 \end{figure}
-From time to time, the user will see the popup shown in figure \ref{fig:paypal}, where he can acquire a premium status. This will change the \texttt{Free} label next to the profile icon in the upper right corner to a star and will help the developer team to implement additional features.
+After a specified free-to-use period, the user will see the popup shown in figure \ref{fig:paypal} where he can acquire a premium status through subscribing to the Foodo Paypal subscription plan. This will change the \texttt{Free} label next to the profile icon in the upper right corner to a star and will help the developer team to implement additional features. Currently, the free-to-use period allows the user to have up to five personalized recipes and the popup will show when the user tries to view more recipes. It is also to mention that the popup is currently skippable and the subscription plan is not mandatory but voluntary.  
 \clearpage
 \section*{Mobile Version}
 Foodo is also available for all mobile devices with access to a web browser. Some examples are shown in the figures below.
