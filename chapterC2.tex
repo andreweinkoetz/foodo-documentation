@@ -287,6 +287,7 @@ Our food taxonomy consists of twelve categories, namely: 'Dairy Product',  'Oils
 
 \subsection*{Steps of the algorithm}
 The algorithm consists of two major steps. In the first step the algorithm iterates through the recipe's ingredients and identifies bad ingredients. An ingredient is bad if it fulfills at least one of the following requirements:
+\vspace{-1em}
 \begin{itemize}
 	\itemsep-0.5em 
 	\item the ingredient's NutriScore is C or worse,
@@ -295,18 +296,20 @@ The algorithm consists of two major steps. In the first step the algorithm itera
 	\item it is contained in the user's set of dislikes, or
 	\item it triggers one of the user's allergies.
 \end{itemize}
-
-\bigskip \bigskip
+\vspace{1em}
               
 After having identified the bad ingredients the algorithm tries to find suitable substitutes within the same ingredient category. A potential substitute is suitable if it fulfills the following requirements:
+\vspace{-1em}
 \begin{itemize}
 	\itemsep-0.5em 
 	\item  the substitute's NutriScore is lower than the bad ingredient's one or if the bad ingredient's one is already A or B then A or B is sufficient for the substitute's NutriScore,
-	\item the substitute is not in conflict with the user's nutrition goal
-	\item it is suitable for the user's lifestyle
+	\item the substitute is not in conflict with the user's nutrition goal,
+	\item it is suitable for the user's lifestyle,
 	\item it does not trigger the user's allergies, and
 	\item it is not contained in the user's set of dislikes, except for the case that there are not any other potential substitutes available which fulfill all of the preceding requirements and are not dislikes of the user.
 \end{itemize}
+\vspace{1em}
+
 When the algorithm has identified a list of suitable substitutes for each of the bad ingredients, it sorts these lists ascendingly based on the NutriScore, so that the healthiest substitute is in the first place. The results, containing the ranked substitutes per bad ingredient, are returned to the calling endpoint.
 
 Additionally, the algorithm offers a function for the Alexa skill which identifies the worst ingredient of a recipe based on the NutriScore and returns the three best substitutes for it in an ordered list. 
